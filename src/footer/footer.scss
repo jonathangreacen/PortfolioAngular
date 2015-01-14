@@ -1,0 +1,25 @@
+.js .site footer{
+	position:absolute;
+	bottom:0;
+	height:$footerHeight;
+	width:$contentWidth;
+	text-align:right;
+	background-color:$footerBGCol;
+	border-top:1px solid $footerDividerCol;
+
+	> div{
+		padding:em(10);
+		font-size:em(12);
+		font-family:Arial,Helvetica,sans-serif;
+		color:$footerTxtCol;		
+
+		span{			
+			&.year{
+				font-style:italic;		
+			}
+			&.company{
+				font-weight:700;
+			}
+		}
+	}
+}

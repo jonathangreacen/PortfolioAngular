@@ -1,0 +1,8 @@
+.js .site .projects .imagePreview{
+	width:100%;
+	height:200px;
+	display:block;
+	margin:em(20) 0;
+	background-color:$imgPreviewBGCol;
+	border:1px solid $imgPreviewBorderCol;
+}

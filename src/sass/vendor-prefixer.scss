@@ -1,0 +1,22 @@
+@mixin vendorPrefixer ($prop, $value, $prefixes:(webkit, moz, ms, o, spec)) {
+		@each $prefix in $prefixes{
+			@if $prefix == webkit{
+				-webkit-#{$prop}: $value;
+			}
+			@else if $prefix == moz{
+				-moz-#{$prop}: $value;
+			}
+			@else if $prefix == ms{
+				-ms-#{$prop}: $value;
+			}
+			@else if $prefix == o{
+				-o-#{$prop}: $value;
+			}
+			@else if $prefix == spec{
+				#{$prop}: $value;
+			}
+			@else{
+				//@warn "Unrecognized prefix: #{$prefix}";
+			}
+		}
+}

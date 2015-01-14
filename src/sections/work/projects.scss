@@ -1,0 +1,58 @@
+.js .site .projects{
+	article{
+		margin:0;
+		padding:em(25) em(10) em(35) em(10);
+		&.selected{
+			background-color:$articleSelectedBGCol;
+			border-top:1px solid $articleSelectedDividerCol;
+			border-bottom:1px solid $articleSelectedDividerCol;
+		}
+		h1{
+			font-size:em(22);
+			font-style:italic;
+			font-weight:normal;
+			line-height:1.5em;
+			vertical-align:baseline;
+			margin:0;
+			color:$articleSummaryTxtCol;
+			span{
+				color:#F00;
+			}
+		}
+		
+		.description{
+			@include vendorPrefixer(column-count, 2, webkit moz spec);
+
+			p{
+				margin:0;
+				padding:em(0) em(10) em(16) em(6);
+				font-size:1em;
+				line-height:1.333em;
+				color:$baseTxtCol;
+			}
+			a.btn{
+				background-color:$linkBtnBGCol;
+				color:$linkBtnFGCol;
+				text-decoration:none;
+				padding:em(2) em(9);
+				margin:0 0 2 0;
+				transition:color 0.27s ease-out,background 0.2s ease-in;
+				&:hover, &:focus{
+					background-color:$linkBtnFGCol;
+					color:$linkBtnBGCol;
+				}
+			}
+		}
+		ul.info{
+			list-style-type:none;
+			font-family:Arial,Helvetica,sans-serif;
+			color:$listTxtCol;
+			font-size:em(13);	
+			padding:0;
+			margin:0;
+			li{
+				line-height:1.5em;
+			}
+		}
+	}
+}

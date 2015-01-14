@@ -4,21 +4,21 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     concat: {
       script:{
-        src:['src/**/*.js'],
+        src:['src/app/app.js', 'src/**/*.js'],
         dest:'dist/build.js',
         options:{
           separator:';'
         }
       },
       scss:{
-        src:['src/**/*.scss', '!src/build.scss'],
-        dest:'src/build.scss'
+        src:['src/sass/*.scss', 'src/**/*.scss'],
+        dest:'dist/build.scss'
       }     
     },
     sass: {
       dist: {
         files: {
-          'dist/build.css' : 'src/build.scss' 
+          'dist/build.css' : 'dist/build.scss' 
         }
       }
     },

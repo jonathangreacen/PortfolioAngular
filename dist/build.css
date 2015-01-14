@@ -1,45 +1,120 @@
+@import url(http://fonts.googleapis.com/css?family=Sorts+Mill+Goudy:400,400italic);
+.js .site footer {
+  position: absolute;
+  bottom: 0;
+  height: 100px;
+  width: 40.625em;
+  text-align: right;
+  background-color: #FFFFFF;
+  border-top: 1px solid #EDEDED; }
+  .js .site footer > div {
+    padding: 0.625em;
+    font-size: 0.75em;
+    font-family: Arial,Helvetica,sans-serif;
+    color: #CACACA; }
+    .js .site footer > div span.year {
+      font-style: italic; }
+    .js .site footer > div span.company {
+      font-weight: 700; }
+
+.js .gfx {
+  display: block;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 225px;
+  background-color: #F2FEF1;
+  position: fixed; }
+  .js .gfx .dropoffShadow {
+    position: absolute;
+    width: 8px;
+    height: 100%;
+    right: 0;
+    border-right: 1px solid #b7e9f6;
+    background: -moz-linear-gradient(left, transparent 0%, rgba(0, 0, 0, 0.08) 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, transparent), color-stop(100%, rgba(0, 0, 0, 0.08)));
+    background: -webkit-linear-gradient(left, transparent 0%, rgba(0, 0, 0, 0.08) 100%);
+    background: -o-linear-gradient(left, transparent 0%, rgba(0, 0, 0, 0.08) 100%);
+    background: -ms-linear-gradient(left, transparent 0%, rgba(0, 0, 0, 0.08) 100%);
+    background: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.08) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#14000000',GradientType=1 ); }
+
+.js .site .content {
+  width: 40.625em;
+  margin: 0;
+  height: inherit; }
+
+.js .site .projects .imagePreview {
+  width: 100%;
+  height: 200px;
+  display: block;
+  margin: 1.25em 0;
+  background-color: #FFFFFF;
+  border: 1px solid #DBDBDB; }
+
+.js .site .projects article {
+  margin: 0;
+  padding: 1.5625em 0.625em 2.1875em 0.625em; }
+  .js .site .projects article.selected {
+    background-color: #FFFFFF;
+    border-top: 1px solid #EDEDED;
+    border-bottom: 1px solid #EDEDED; }
+  .js .site .projects article h1 {
+    font-size: 1.375em;
+    font-style: italic;
+    font-weight: normal;
+    line-height: 1.5em;
+    vertical-align: baseline;
+    margin: 0; }
+    .js .site .projects article h1 span {
+      color: #F00; }
+  .js .site .projects article .description {
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2; }
+    .js .site .projects article .description p {
+      margin: 0;
+      padding: 0em 0.625em 1em 0.375em;
+      font-size: 1em;
+      line-height: 1.333em;
+      color: #686868; }
+    .js .site .projects article .description a.btn {
+      background-color: #FF5948;
+      color: #FFFFFF;
+      text-decoration: none;
+      padding: 0.125em 0.5625em;
+      margin: 0 0 2 0;
+      transition: color 0.27s ease-out,background 0.2s ease-in; }
+      .js .site .projects article .description a.btn:hover, .js .site .projects article .description a.btn:focus {
+        background-color: #FFFFFF;
+        color: #FF5948; }
+  .js .site .projects article ul.info {
+    list-style-type: none;
+    font-family: Arial,Helvetica,sans-serif;
+    color: #B7B7B7;
+    font-size: 0.8125em;
+    padding: 0;
+    margin: 0; }
+    .js .site .projects article ul.info li {
+      line-height: 1.5em; }
+
 html, body {
-  background-color: white;
+  background-color: #F7F7F7;
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: Arial,Helvetica,sans-serif;
+  font-family: "Sorts Mill Goudy",Georgia,serif;
   font-size: 1em; }
 
-.gfx, .site, footer {
-  display: none; }
-
-.js .gfx, .js .site {
-  display: block;
-  height: 100%;
-  margin: 0;
-  padding: 0; }
-
-.js .gfx {
-  width: 225px;
-  background-color: #FCC;
-  position: fixed; }
-
 .js .site {
-  margin-left: 225px;
-  background-color: #CCF;
-  overflow-x: hidden;
-  position: relative; }
+  position: relative;
+  min-height: 100%;
+  padding: 0;
+  margin: 0;
+  margin-left: 255px; }
+  .js .site .content {
+    padding-bottom: 100px; }
+  .js .site .noJS {
+    display: none; }
 
-.js .content {
-  width: 500px;
-  margin: 0 10px;
-  background-color: #BBF;
-  height: inherit; }
-
-.js footer {
-  display: block;
-  background-color: rgba(0, 0, 0, 0.1);
-  bottom: 0;
-  height: 50px;
-  width: 500px;
-  margin-top: -50px;
-  margin-left: 10px; }
-
-.js .noJS {
-  display: none; }
+/*# sourceMappingURL=build.css.map */
