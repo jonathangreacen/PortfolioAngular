@@ -1,0 +1,33 @@
+$tabletish-width: 768px;
+$desktopish-width: 1024px;
+$lobbyDisplayish-width:1560px;
+
+@mixin tabletish {
+  @media (min-width: #{$tabletish-width}) {
+    @content;
+  }
+}
+
+@mixin desktopish {
+  @media (min-width: #{$desktopish-width}) {
+    @content;
+  }
+}
+
+@mixin lobbyDisplayish {
+  @media (min-width: #{$lobbyDisplayish-width}) {
+    @content;
+  }
+}
+
+@mixin highDPI {
+  @media
+    only screen and (-webkit-min-device-pixel-ratio: 2),
+    only screen and (min--moz-device-pixel-ratio: 2),
+    only screen and (-o-min-device-pixel-ratio: 2/1),
+    only screen and (min-device-pixel-ratio: 2),
+    only screen and (min-resolution: 192dpi),
+    only screen and (min-resolution: 2dppx) {
+    @content;
+  }
+}

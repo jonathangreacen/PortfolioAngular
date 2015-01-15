@@ -2,11 +2,13 @@
 	article{
 		margin:0;
 		padding:em(25) em(10) em(35) em(10);
+
 		&.selected{
 			background-color:$articleSelectedBGCol;
 			border-top:1px solid $articleSelectedDividerCol;
 			border-bottom:1px solid $articleSelectedDividerCol;
 		}
+
 		h1{
 			font-size:em(22);
 			font-style:italic;
@@ -15,13 +17,17 @@
 			vertical-align:baseline;
 			margin:0;
 			color:$articleSummaryTxtCol;
-			span{
-				color:#F00;
-			}
 		}
 		
 		.description{
-			@include vendorPrefixer(column-count, 2, webkit moz spec);
+
+			@include desktopish{
+				@include vendorPrefixer(column-count, 2, webkit moz spec);
+			}
+
+			@include lobbyDisplayish{
+				@include vendorPrefixer(column-count, 3, webkit moz spec);
+			}
 
 			p{
 				margin:0;

@@ -20,6 +20,39 @@ $footerTxtCol:#CACACA;
 @function em($pxval, $base:16){
 	@return ($pxval / $base) * 1em;
 }
+$tabletish-width: 768px;
+$desktopish-width: 1024px;
+$lobbyDisplayish-width:1560px;
+
+@mixin tabletish {
+  @media (min-width: #{$tabletish-width}) {
+    @content;
+  }
+}
+
+@mixin desktopish {
+  @media (min-width: #{$desktopish-width}) {
+    @content;
+  }
+}
+
+@mixin lobbyDisplayish {
+  @media (min-width: #{$lobbyDisplayish-width}) {
+    @content;
+  }
+}
+
+@mixin highDPI {
+  @media
+    only screen and (-webkit-min-device-pixel-ratio: 2),
+    only screen and (min--moz-device-pixel-ratio: 2),
+    only screen and (-o-min-device-pixel-ratio: 2/1),
+    only screen and (min-device-pixel-ratio: 2),
+    only screen and (min-resolution: 192dpi),
+    only screen and (min-resolution: 2dppx) {
+    @content;
+  }
+}
 
 $gfxWidth:225px;
 $contentWidth:em(650);
@@ -107,7 +140,7 @@ nav{
 	//display:none;
 }
 .js .site .content{
-	width:$contentWidth;
+	width:100%;//$contentWidth;
 	margin:0;
 	height:inherit;
 }
@@ -123,11 +156,13 @@ nav{
 	article{
 		margin:0;
 		padding:em(25) em(10) em(35) em(10);
+
 		&.selected{
 			background-color:$articleSelectedBGCol;
 			border-top:1px solid $articleSelectedDividerCol;
 			border-bottom:1px solid $articleSelectedDividerCol;
 		}
+
 		h1{
 			font-size:em(22);
 			font-style:italic;
@@ -135,13 +170,18 @@ nav{
 			line-height:1.5em;
 			vertical-align:baseline;
 			margin:0;
-			span{
-				color:#F00;
-			}
+			color:$articleSummaryTxtCol;
 		}
 		
 		.description{
-			@include vendorPrefixer(column-count, 2, webkit moz spec);
+
+			@include desktopish{
+				@include vendorPrefixer(column-count, 2, webkit moz spec);
+			}
+
+			@include lobbyDisplayish{
+				@include vendorPrefixer(column-count, 3, webkit moz spec);
+			}
 
 			p{
 				margin:0;
@@ -193,7 +233,8 @@ html, body{
 	padding:0;
 	margin:0;
 	margin-left:$gfxWidth + $gfxContentMargin;
-
+	padding-right:$gfxContentMargin;
+	
 	.content{
 		padding-bottom:$footerHeight;
 	}
