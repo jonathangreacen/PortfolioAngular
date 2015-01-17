@@ -15,8 +15,8 @@
 					timeoutID,					
 					currentImageIndex = 0,
 					RATE = 5000,					
-					NEXT_CLASSES = 'next invisible',
-					CURRENT_CLASSES = 'current front visible',
+					NEXT_CLASSES = 'next',
+					CURRENT_CLASSES = 'current',
 					data = ['/data/projects/1.jpg', '/data/projects/2.jpg', '/data/projects/3.jpg', '/data/projects/4.jpg'];
 
 				init();
@@ -49,7 +49,7 @@
 					timeoutID = $timeout(load, RATE);
 				}
 				function stop(){
-					timeoutID.cancel();//or something like that
+					$timeot.cancel(timeoutID);
 				}
 				function swap(){
 					var _next = next;
