@@ -51,6 +51,15 @@
   margin: 1.25em 0;
   background-color: #FFFFFF;
   border: 1px solid #DBDBDB; }
+  .js .site .projects .imagePreview img {
+    position: absolute;
+    transition: opacity .75s linear; }
+    .js .site .projects .imagePreview img.invisible {
+      opacity: 0; }
+    .js .site .projects .imagePreview img.visible {
+      opacity: 1; }
+    .js .site .projects .imagePreview img.front {
+      z-index: 2; }
 
 .js .site .projects article {
   margin: 0;

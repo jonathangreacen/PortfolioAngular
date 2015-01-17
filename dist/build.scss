@@ -151,6 +151,21 @@ nav{
 	margin:em(20) 0;
 	background-color:$imgPreviewBGCol;
 	border:1px solid $imgPreviewBorderCol;
+
+	img{
+		position:absolute;
+		transition:opacity .75s linear;
+		&.invisible{
+			opacity:0;
+		}
+		&.visible{
+			opacity:1;
+		}
+		&.front{
+			z-index:2;
+		}
+
+	}
 }
 .js .site .projects{
 	article{
