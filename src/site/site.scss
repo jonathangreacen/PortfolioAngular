@@ -1,4 +1,3 @@
-@import url(http://fonts.googleapis.com/css?family=Sorts+Mill+Goudy:400,400italic);
 html, body{
 	background-color:$bgColor;
 	margin:0;
@@ -14,9 +13,13 @@ html, body{
 	min-height:100%;
 	padding:0;
 	margin:0;
-	margin-left:$gfxWidth + $gfxContentMargin;
-	padding-right:$gfxContentMargin;
-	
+	margin-left:$gfxContentMargin/2;
+	padding-right:$gfxContentMargin/2;
+
+	@include tabletish{
+		margin-left:$gfxWidth + $gfxContentMargin;
+		padding-right:$gfxContentMargin;
+	}
 	.content{
 		padding-bottom:$footerHeight;
 	}

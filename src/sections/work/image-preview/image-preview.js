@@ -11,7 +11,7 @@
 				var next,
 					current,
 					img1,
-					img2,
+					img2,					
 					timeoutID,					
 					currentImageIndex = 0,
 					RATE = 5000,					
@@ -57,7 +57,13 @@
 					current = _next;
 
 					next.className = NEXT_CLASSES;
-					current.className = CURRENT_CLASSES;					
+					current.className = CURRENT_CLASSES;
+
+					resize();
+				}
+				function resize(){
+					var h = current.clientHeight;
+					$element[0].style.height = h + 'px';
 				}
 			}
 		};

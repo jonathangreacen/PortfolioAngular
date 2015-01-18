@@ -1,21 +1,27 @@
 .js .site .projects .imagePreview{
 	width:100%;
-	height:200px;
+	position:relative;
 	display:block;
 	margin:em(20) 0;
 	background-color:$imgPreviewBGCol;
 	border:1px solid $imgPreviewBorderCol;
 
 	img{
+		max-width:100%;
+		min-height:100px;
 		position:absolute;
 		transition:opacity .75s linear;
 		&.next{
+			z-index:1;
 			opacity:0;
 		}
 		&.current{
 			opacity:1;
 			z-index:2;
 		}
+		&:after{
+			clear:both;
+			}
 
 	}
 }

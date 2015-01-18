@@ -20,8 +20,8 @@ $footerTxtCol:#CACACA;
 @function em($pxval, $base:16){
 	@return ($pxval / $base) * 1em;
 }
-$tabletish-width: 768px;
-$desktopish-width: 1024px;
+$tabletish-width: 421px;
+$desktopish-width: 800px;
 $lobbyDisplayish-width:1560px;
 
 @mixin tabletish {
@@ -84,7 +84,7 @@ $gfxContentMargin:30px;
 	position:absolute;
 	bottom:0;
 	height:$footerHeight;
-	width:$contentWidth;
+	width:100%;//$contentWidth;
 	text-align:right;
 	background-color:$footerBGCol;
 	border-top:1px solid $footerDividerCol;
@@ -111,10 +111,19 @@ $gfxContentMargin:30px;
 	margin:0;
 	padding:0;
 
-	width:$gfxWidth;
+	width:0;//$gfxWidth;
+	@include tabletish{
+		width:$gfxWidth;
+	}
 	background-color:$gfxBGCol;
 	position:fixed;
 
+	canvas{
+		width:$gfxWidth;
+		height:100%;
+		background-color:#0f0;
+
+	}
 	.dropoffShadow{
 		position:absolute;
 		width:8px;
@@ -146,22 +155,28 @@ nav{
 }
 .js .site .projects .imagePreview{
 	width:100%;
-	height:200px;
+	position:relative;
 	display:block;
 	margin:em(20) 0;
 	background-color:$imgPreviewBGCol;
 	border:1px solid $imgPreviewBorderCol;
 
 	img{
+		max-width:100%;
+		min-height:100px;
 		position:absolute;
 		transition:opacity .75s linear;
 		&.next{
+			z-index:1;
 			opacity:0;
 		}
 		&.current{
 			opacity:1;
 			z-index:2;
 		}
+		&:after{
+			clear:both;
+			}
 
 	}
 }
@@ -174,6 +189,7 @@ nav{
 			background-color:$articleSelectedBGCol;
 			border-top:1px solid $articleSelectedDividerCol;
 			border-bottom:1px solid $articleSelectedDividerCol;
+			transition:background-color .75s linear;
 		}
 
 		h1{
@@ -245,9 +261,13 @@ html, body{
 	min-height:100%;
 	padding:0;
 	margin:0;
-	margin-left:$gfxWidth + $gfxContentMargin;
-	padding-right:$gfxContentMargin;
-	
+	margin-left:$gfxContentMargin/2;
+	padding-right:$gfxContentMargin/2;
+
+	@include tabletish{
+		margin-left:$gfxWidth + $gfxContentMargin;
+		padding-right:$gfxContentMargin;
+	}
 	.content{
 		padding-bottom:$footerHeight;
 	}

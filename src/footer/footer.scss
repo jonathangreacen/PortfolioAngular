@@ -2,7 +2,7 @@
 	position:absolute;
 	bottom:0;
 	height:$footerHeight;
-	width:$contentWidth;
+	width:100%;//$contentWidth;
 	text-align:right;
 	background-color:$footerBGCol;
 	border-top:1px solid $footerDividerCol;
