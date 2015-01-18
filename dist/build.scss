@@ -155,13 +155,11 @@ nav{
 	img{
 		position:absolute;
 		transition:opacity .75s linear;
-		&.invisible{
+		&.next{
 			opacity:0;
 		}
-		&.visible{
+		&.current{
 			opacity:1;
-		}
-		&.front{
 			z-index:2;
 		}
 

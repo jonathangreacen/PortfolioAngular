@@ -49,7 +49,7 @@
 					timeoutID = $timeout(load, RATE);
 				}
 				function stop(){
-					$timeot.cancel(timeoutID);
+					$timeout.cancel(timeoutID);
 				}
 				function swap(){
 					var _next = next;

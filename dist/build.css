@@ -54,11 +54,10 @@
   .js .site .projects .imagePreview img {
     position: absolute;
     transition: opacity .75s linear; }
-    .js .site .projects .imagePreview img.invisible {
+    .js .site .projects .imagePreview img.next {
       opacity: 0; }
-    .js .site .projects .imagePreview img.visible {
-      opacity: 1; }
-    .js .site .projects .imagePreview img.front {
+    .js .site .projects .imagePreview img.current {
+      opacity: 1;
       z-index: 2; }
 
 .js .site .projects article {
