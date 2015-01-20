@@ -20,8 +20,15 @@
 			loader,
 			arrows = [];
 
+		this.initialized = false;
 		this.running = false;
-		this.init = function(_c){
+		this.resize = resize;
+		this.interact = launchArrows.bind(this);
+		this.update = update;
+		this.draw = draw;
+		this.init = init;
+
+		function init(_c){
 			canvas = _c;
 			ctx = canvas.getContext('2d');
 			resize();
@@ -37,18 +44,21 @@
 			arrow_data.onload = onArrowDataLoaded.bind(this);
 			arrow_data.src = '/data/vis/logarithmic-arrow_3.png';
 		};
-		function onArrowDataLoaded(e){
-			if(arrow_data) arrow_data.onload = null;
-			launchArrows();
-			update();
-		};
 
-		this.resize = resize;
+		function onArrowDataLoaded(e){
+			if(arrow_data){
+				arrow_data.onload = null;
+				this.initialized = true;
+				this.interact();
+			}
+		};
+		
 		function resize(){
 			canvas.height = window.innerHeight;
 			width = canvas.width;
 			height = canvas.height;
 		};
+		
 		function pauseArrowLaunch(){
 			clearInterval(launchTimer);
 			clearInterval(releaseTimer);
@@ -57,16 +67,13 @@
 			this.running = false;
 		};
 
-		this.interact = function(evt){
-			launchArrows();
-		}
 		function launchArrows(){
-			if(!this.running){
+			if(this.initialized === true && this.running === false){
 				this.running = true;
 				if(launchTimer)  clearInterval(launchTimer);
 				if(releaseTimer) clearInterval(releaseTimer);
-				launchTimer = setTimeout(pauseArrowLaunch, Math.random()*1550 + 2000);
-				releaseTimer = setInterval(release , 6);
+				launchTimer = setTimeout(pauseArrowLaunch.bind(this), Math.random()*1550 + 2000);
+				releaseTimer = setInterval(release.bind(this) , 6);
 			}
 		};
 
@@ -82,8 +89,7 @@
 				arrow.resetVelocity();
 			arrows.push(arrow);
 		};
-
-		this.update = update;
+		
 		function update(){
 			var t = arrows.length,
 				i = 0,
@@ -109,9 +115,6 @@
 				}
 			}
 			
-			window.cancelAnimationFrame(animationTimer);
-			animationTimer = window.requestAnimationFrame(update);
-		//	draw();
 			t = arrowsToRemove.length;
 			for(i=0; i<t; i++){
 				arrow = arrowsToRemove[i];
@@ -119,7 +122,7 @@
 				arrows.splice(removeIndex,1);
 			}
 		};
-		this.draw = draw;
+		
 		function draw(){
 			canvas.height = canvas.height;
 			var t = arrows.length,

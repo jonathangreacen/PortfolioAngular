@@ -13,7 +13,7 @@
 					$scope.projects = [];
 
 					AppContent.getContentForView(VIEW_NAME).then(bindProjectData);
-					
+
 					function bindProjectData(data){
 						$scope.projectsData = data;
 					};
@@ -24,9 +24,10 @@
 					
 				},
 				link:function(scope, $element){
-					scope.currentFocusedProject;//needs containing object for faster bindings
-					$window.addEventListener('scroll', highlightCurrentProject.bind(this));
-					
+					scope.state = {};
+					scope.state.currentFocusedProject;
+					angular.element($window).on('scroll', highlightCurrentProject.bind(this));
+
 					function highlightCurrentProject(){
 						var projects = scope.projects,
 							t = projects.length,
@@ -34,18 +35,21 @@
 							project,
 							projectY,
 							midPoint = $window.innerHeight / 2,
-							_winY = $window.pageYOffset;
+							_winY = $window.pageYOffset,
+							currentFocusedProject = scope.state.currentFocusedProject;
 
 						for(i; i<t; i++){
 							project = projects[i];
 							projectY = project.element.offsetTop;
 
-							if(scope.currentFocusedProject !== project.data && midPoint > projectY - _winY && midPoint < projectY + parseInt(project.element.offsetHeight, 10) - _winY){
-								if(scope.currentFocusedProject) {
-									//angular.element(currentFocusedProject).removeClass('selected');
+							if(currentFocusedProject !== project && midPoint > projectY - _winY && midPoint < projectY + parseInt(project.element.offsetHeight, 10) - _winY){
+								if(currentFocusedProject) {
+									angular.element(currentFocusedProject.element).scope().stopImagePreview();
 								}
-								scope.currentFocusedProject = project.data;
-								//angular.element(currentFocusedProject).addClass('selected');								
+								scope.state.currentFocusedProject = project;
+								angular.element(project.element).scope().startImagePreview();
+								scope.$apply();
+								break;
 							}
 						}
 					}
@@ -61,8 +65,13 @@
 				replace:true,
 				templateUrl:'../src/sections/work/project.tpl.html',
 				require:'^projects',
-				link:function(scope, element, attrs, controller){
-					controller.addProject({element:element[0], data:scope.project});
+				controller:function($scope){
+					this.setImagePreview = function(imagePreview){
+						$scope.imagePreview = imagePreview;
+					}
+				},
+				link:function(scope, $element, attrs, controller){
+					controller.addProject({element:$element[0], data:scope.project});
 				}
 			}
 		}]);

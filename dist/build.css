@@ -74,12 +74,16 @@
 
 .js .site .projects article {
   margin: 0;
-  padding: 1.5625em 0.625em 2.1875em 0.625em; }
+  padding: 1.5625em 0.625em 2.1875em 0.625em;
+  -webkit-transition: background-color 0.75s linear;
+  -moz-transition: background-color 0.75s linear;
+  -ms-transition: background-color 0.75s linear;
+  -o-transition: background-color 0.75s linear;
+  transition: background-color 0.75s linear; }
   .js .site .projects article.selected {
     background-color: #FFFFFF;
     border-top: 1px solid #EDEDED;
-    border-bottom: 1px solid #EDEDED;
-    transition: background-color .75s linear; }
+    border-bottom: 1px solid #EDEDED; }
   .js .site .projects article h1 {
     font-size: 1.375em;
     font-style: italic;

@@ -4,22 +4,27 @@
 
 	function ImagePreview($timeout){
 		return {
-			scope:true,
 			restrict:'A',
-			//require:'^project',
-			link:function(scope, $element, attributes){
+			require:'^project',
+			link:function(scope, $element, attributes, controller){
 				var next,
 					current,
 					img1,
 					img2,					
 					timeoutID,					
 					currentImageIndex = 0,
-					RATE = 5000,					
+					RATE = 2000,					
 					NEXT_CLASSES = 'next',
 					CURRENT_CLASSES = 'current',
 					data = ['/data/projects/1.jpg', '/data/projects/2.jpg', '/data/projects/3.jpg', '/data/projects/4.jpg'];
 
 				init();
+				controller.setImagePreview($element);
+
+				this.running = false;
+				scope.startImagePreview = start.bind(this);
+				scope.stopImagePreview = stop.bind(this);
+
 				function init(){
 					if(data){
 						img1 = document.createElement('img');
@@ -33,22 +38,29 @@
 						next = img1;
 						current = img2;
 						load();
-					}					
+					}
 				}
 				function load(){
 					var url = data[currentImageIndex];
-					
 					next.src = url;
 					currentImageIndex = currentImageIndex < data.length - 2 ? ++currentImageIndex : 0;
 				}
-				function onLoad(evt){
+				function onLoad(evt){					
 					swap();
-					reset();
+					if(this.running){
+						reset();
+					}
 				}
 				function reset(){
+					load();
 					timeoutID = $timeout(load, RATE);
 				}
+				function start(){
+					this.running = true;
+					reset();
+				}
 				function stop(){
+					this.running = false;
 					$timeout.cancel(timeoutID);
 				}
 				function swap(){

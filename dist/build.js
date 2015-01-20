@@ -84,20 +84,21 @@
 	'use strict';
 
 	var module = angular.module('workshop.portfolio');	
-		module.directive('gfx', ['$window', 'Constants', 'Drawing', 'LogarithmicUniverse', GFX]);
+		module.directive('gfx', ['$window', 'requestAnimationFrame', 'Constants', 'Drawing', 'LogarithmicUniverse', GFX]);
 
-	function GFX($window, Constants, Drawing, LogarithmicUniverse){
+	function GFX($window, requestAnimationFrame, Constants, Drawing, LogarithmicUniverse){
 		return {
 			restrict:'A',
 			scope:{},
 			replace:true,
 			link:function(scope, $element, attributes){
-			/*	var canvas = document.createElement('canvas'),
+				var canvas = document.createElement('canvas'),
 					vis = Constants.currentVisualization = LogarithmicUniverse;
 
 				$element.append(canvas);
 
 				function draw(){
+					requestAnimationFrame(draw);
 					vis.update();
 					vis.draw();
 				}
@@ -109,8 +110,8 @@
 				}
 				vis.init(canvas);
 				angular.element($window).on('resize', resize.bind(this));
-				angular.element(canvas).on('click touchstart', interact.bind(this))
-				window.setInterval(draw.bind(this), 30);*/
+				angular.element(canvas).on('click touchstart', interact.bind(this));				
+				draw();
 			}
 		}
 	};
@@ -137,8 +138,15 @@
 			loader,
 			arrows = [];
 
+		this.initialized = false;
 		this.running = false;
-		this.init = function(_c){
+		this.resize = resize;
+		this.interact = launchArrows.bind(this);
+		this.update = update;
+		this.draw = draw;
+		this.init = init;
+
+		function init(_c){
 			canvas = _c;
 			ctx = canvas.getContext('2d');
 			resize();
@@ -154,18 +162,21 @@
 			arrow_data.onload = onArrowDataLoaded.bind(this);
 			arrow_data.src = '/data/vis/logarithmic-arrow_3.png';
 		};
-		function onArrowDataLoaded(e){
-			if(arrow_data) arrow_data.onload = null;
-			launchArrows();
-			update();
-		};
 
-		this.resize = resize;
+		function onArrowDataLoaded(e){
+			if(arrow_data){
+				arrow_data.onload = null;
+				this.initialized = true;
+				this.interact();
+			}
+		};
+		
 		function resize(){
 			canvas.height = window.innerHeight;
 			width = canvas.width;
 			height = canvas.height;
 		};
+		
 		function pauseArrowLaunch(){
 			clearInterval(launchTimer);
 			clearInterval(releaseTimer);
@@ -174,16 +185,13 @@
 			this.running = false;
 		};
 
-		this.interact = function(evt){
-			launchArrows();
-		}
 		function launchArrows(){
-			if(!this.running){
+			if(this.initialized === true && this.running === false){
 				this.running = true;
 				if(launchTimer)  clearInterval(launchTimer);
 				if(releaseTimer) clearInterval(releaseTimer);
-				launchTimer = setTimeout(pauseArrowLaunch, Math.random()*1550 + 2000);
-				releaseTimer = setInterval(release , 6);
+				launchTimer = setTimeout(pauseArrowLaunch.bind(this), Math.random()*1550 + 2000);
+				releaseTimer = setInterval(release.bind(this) , 6);
 			}
 		};
 
@@ -199,8 +207,7 @@
 				arrow.resetVelocity();
 			arrows.push(arrow);
 		};
-
-		this.update = update;
+		
 		function update(){
 			var t = arrows.length,
 				i = 0,
@@ -226,9 +233,6 @@
 				}
 			}
 			
-			window.cancelAnimationFrame(animationTimer);
-			animationTimer = window.requestAnimationFrame(update);
-		//	draw();
 			t = arrowsToRemove.length;
 			for(i=0; i<t; i++){
 				arrow = arrowsToRemove[i];
@@ -236,7 +240,7 @@
 				arrows.splice(removeIndex,1);
 			}
 		};
-		this.draw = draw;
+		
 		function draw(){
 			canvas.height = canvas.height;
 			var t = arrows.length,
@@ -297,6 +301,23 @@
 
 		};
 	};
+
+}(angular));;(function(angular){
+	'use strict';
+
+	var module = angular.module('workshop.portfolio');	
+		module.factory('requestAnimationFrame', [RAF]);
+
+	function RAF(){		
+		return window.requestAnimationFrame    ||
+		    window.webkitRequestAnimationFrame ||
+		    window.mozRequestAnimationFrame    ||
+		    window.oRequestAnimationFrame      ||
+		    window.msRequestAnimationFrame     ||
+		    function(callback, element){
+		      window.setTimeout(callback, 1000 / 60);
+		    };
+	}
 
 }(angular));;(function(angular){
 	'use strict';
@@ -363,22 +384,27 @@
 
 	function ImagePreview($timeout){
 		return {
-			scope:true,
 			restrict:'A',
-			//require:'^project',
-			link:function(scope, $element, attributes){
+			require:'^project',
+			link:function(scope, $element, attributes, controller){
 				var next,
 					current,
 					img1,
 					img2,					
 					timeoutID,					
 					currentImageIndex = 0,
-					RATE = 5000,					
+					RATE = 2000,					
 					NEXT_CLASSES = 'next',
 					CURRENT_CLASSES = 'current',
 					data = ['/data/projects/1.jpg', '/data/projects/2.jpg', '/data/projects/3.jpg', '/data/projects/4.jpg'];
 
 				init();
+				controller.setImagePreview($element);
+
+				this.running = false;
+				scope.startImagePreview = start.bind(this);
+				scope.stopImagePreview = stop.bind(this);
+
 				function init(){
 					if(data){
 						img1 = document.createElement('img');
@@ -392,22 +418,29 @@
 						next = img1;
 						current = img2;
 						load();
-					}					
+					}
 				}
 				function load(){
 					var url = data[currentImageIndex];
-					
 					next.src = url;
 					currentImageIndex = currentImageIndex < data.length - 2 ? ++currentImageIndex : 0;
 				}
-				function onLoad(evt){
+				function onLoad(evt){					
 					swap();
-					reset();
+					if(this.running){
+						reset();
+					}
 				}
 				function reset(){
+					load();
 					timeoutID = $timeout(load, RATE);
 				}
+				function start(){
+					this.running = true;
+					reset();
+				}
 				function stop(){
+					this.running = false;
 					$timeout.cancel(timeoutID);
 				}
 				function swap(){
@@ -443,7 +476,7 @@
 					$scope.projects = [];
 
 					AppContent.getContentForView(VIEW_NAME).then(bindProjectData);
-					
+
 					function bindProjectData(data){
 						$scope.projectsData = data;
 					};
@@ -454,9 +487,10 @@
 					
 				},
 				link:function(scope, $element){
-					scope.currentFocusedProject;//needs containing object for faster bindings
-					$window.addEventListener('scroll', highlightCurrentProject.bind(this));
-					
+					scope.state = {};
+					scope.state.currentFocusedProject;
+					angular.element($window).on('scroll', highlightCurrentProject.bind(this));
+
 					function highlightCurrentProject(){
 						var projects = scope.projects,
 							t = projects.length,
@@ -464,18 +498,21 @@
 							project,
 							projectY,
 							midPoint = $window.innerHeight / 2,
-							_winY = $window.pageYOffset;
+							_winY = $window.pageYOffset,
+							currentFocusedProject = scope.state.currentFocusedProject;
 
 						for(i; i<t; i++){
 							project = projects[i];
 							projectY = project.element.offsetTop;
 
-							if(scope.currentFocusedProject !== project.data && midPoint > projectY - _winY && midPoint < projectY + parseInt(project.element.offsetHeight, 10) - _winY){
-								if(scope.currentFocusedProject) {
-									//angular.element(currentFocusedProject).removeClass('selected');
+							if(currentFocusedProject !== project && midPoint > projectY - _winY && midPoint < projectY + parseInt(project.element.offsetHeight, 10) - _winY){
+								if(currentFocusedProject) {
+									angular.element(currentFocusedProject.element).scope().stopImagePreview();
 								}
-								scope.currentFocusedProject = project.data;
-								//angular.element(currentFocusedProject).addClass('selected');								
+								scope.state.currentFocusedProject = project;
+								angular.element(project.element).scope().startImagePreview();
+								scope.$apply();
+								break;
 							}
 						}
 					}
@@ -491,8 +528,13 @@
 				replace:true,
 				templateUrl:'../src/sections/work/project.tpl.html',
 				require:'^projects',
-				link:function(scope, element, attrs, controller){
-					controller.addProject({element:element[0], data:scope.project});
+				controller:function($scope){
+					this.setImagePreview = function(imagePreview){
+						$scope.imagePreview = imagePreview;
+					}
+				},
+				link:function(scope, $element, attrs, controller){
+					controller.addProject({element:$element[0], data:scope.project});
 				}
 			}
 		}]);

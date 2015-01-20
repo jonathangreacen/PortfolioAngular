@@ -184,12 +184,12 @@ nav{
 	article{
 		margin:0;
 		padding:em(25) em(10) em(35) em(10);
+		@include vendorPrefixer(transition, background-color .75s linear);
 
 		&.selected{
 			background-color:$articleSelectedBGCol;
 			border-top:1px solid $articleSelectedDividerCol;
-			border-bottom:1px solid $articleSelectedDividerCol;
-			transition:background-color .75s linear;
+			border-bottom:1px solid $articleSelectedDividerCol;			
 		}
 
 		h1{
