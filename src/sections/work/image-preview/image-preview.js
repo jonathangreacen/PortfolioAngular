@@ -1,9 +1,12 @@
 (function(angular){
 	var module = angular.module('workshop.portfolio');	
-		module.directive('imagePreview', ['$timeout', ImagePreview]);
+		module.directive('imagePreview', ['$document', '$timeout', '$window', 'Constants', ImagePreview]);
 
-	function ImagePreview($timeout){
+	function ImagePreview($document, $timeout, $window, Constants){
 		return {
+			scope:{
+				images : '@'
+			},
 			restrict:'A',
 			require:'^project',
 			link:function(scope, $element, attributes, controller){
@@ -16,51 +19,57 @@
 					RATE = 2000,					
 					NEXT_CLASSES = 'next',
 					CURRENT_CLASSES = 'current',
-					data = ['/data/projects/1.jpg', '/data/projects/2.jpg', '/data/projects/3.jpg', '/data/projects/4.jpg'];
-
+					data;
+				
 				init();
-				controller.setImagePreview($element);
-
-				this.running = false;
-				scope.startImagePreview = start.bind(this);
-				scope.stopImagePreview = stop.bind(this);
 
 				function init(){
+					scope.running = false;
+					scope.start = start;
+					scope.stop = stop;
+
+					data = JSON.parse(scope.images);
+					controller.setImagePreview(scope);
 					if(data){
-						img1 = document.createElement('img');
-						img2 = document.createElement('img');
+						img1 = $document[0].createElement('img');
+						img2 = $document[0].createElement('img');
 						img1.setAttribute('class', NEXT_CLASSES);
 						img2.setAttribute('class', CURRENT_CLASSES);
-						angular.element(img1).on('load', onLoad);
-						angular.element(img2).on('load', onLoad);
+					//	angular.element(img1).bind('load', onLoad);
+					//	angular.element(img2).bind('load', onLoad);
+						img1.addEventListener('load', onLoad);
+						img2.addEventListener('load', onLoad)
 						$element.append(img1);
 						$element.append(img2);
 						next = img1;
 						current = img2;
 						load();
+
+						angular.element($window).bind('resize', resize)
 					}
 				}
 				function load(){
-					var url = data[currentImageIndex];
-					next.src = url;
-					currentImageIndex = currentImageIndex < data.length - 2 ? ++currentImageIndex : 0;
+					var url = Constants.API_PATH + data[currentImageIndex];
+					currentImageIndex = currentImageIndex < data.length - 1 ? ++currentImageIndex : 0;
+					next.src = url + "?cacheBust="+ new Date().getTime();
 				}
-				function onLoad(evt){					
+				function onLoad(evt){
 					swap();
-					if(this.running){
+					if(scope.running===true){
 						reset();
 					}
 				}
 				function reset(){
-					load();
-					timeoutID = $timeout(load, RATE);
+					if(scope.running===true){
+						timeoutID = $timeout(load, RATE);
+					}
 				}
 				function start(){
-					this.running = true;
+					scope.running = true;
 					reset();
 				}
 				function stop(){
-					this.running = false;
+					scope.running = false;
 					$timeout.cancel(timeoutID);
 				}
 				function swap(){
@@ -70,12 +79,16 @@
 
 					next.className = NEXT_CLASSES;
 					current.className = CURRENT_CLASSES;
-
 					resize();
 				}
 				function resize(){
-					var h = current.clientHeight;
+					var h = current.height,
+						w = $element[0].clientWidth;		
 					$element[0].style.height = h + 'px';
+					current.style.left = ((w - current.width) / 2) + 'px'
+				}
+				function destroy(){
+					angular.element($window).unbind('resize', resize)
 				}
 			}
 		};

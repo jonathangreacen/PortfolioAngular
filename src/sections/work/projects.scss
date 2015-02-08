@@ -4,20 +4,25 @@
 		padding:em(25) em(10) em(35) em(10);
 		@include vendorPrefixer(transition, background-color .75s linear);
 
-		&.selected{
+		&.active{
 			background-color:$articleSelectedBGCol;
 			border-top:1px solid $articleSelectedDividerCol;
 			border-bottom:1px solid $articleSelectedDividerCol;			
 		}
 
 		h1{
-			font-size:em(22);
+			font-size:em(28);
 			font-style:italic;
 			font-weight:normal;
-			line-height:1.5em;
+			line-height:1.333em;
 			vertical-align:baseline;
-			margin:0;
+			margin:em(10) 0;
 			color:$articleSummaryTxtCol;
+
+			&::selection, span::selection{
+				background:$articleH1SelectionBGCol;
+				color:$baseTxtCol;
+			}
 		}
 		
 		.description{
@@ -31,11 +36,15 @@
 			}
 
 			p{
+				$fontSize:18;
+				font-size:em($fontSize, 16);
 				margin:0;
-				padding:em(0) em(10) em(16) em(6);
-				font-size:1em;
-				line-height:1.333em;
+				padding:em(0, $fontSize) em(10, $fontSize) em(16, $fontSize) em(6, $fontSize);				
+				line-height:em(24, $fontSize);
 				color:$baseTxtCol;
+				&::selection, i::selection{
+					background:$articleSummarySelectionBGCol;
+				}
 			}
 			a.btn{
 				background-color:$linkBtnBGCol;
@@ -59,6 +68,9 @@
 			margin:0;
 			li{
 				line-height:1.5em;
+				&::selection, strong::selection{
+					background:$articleInfoSelectionBGCol;
+				}
 			}
 		}
 	}

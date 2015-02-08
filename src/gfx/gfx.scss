@@ -1,11 +1,13 @@
 .js .gfx{
-	display:block;
+	display:none;
 	height:100%;
 	margin:0;
 	padding:0;
 
-	width:0;//$gfxWidth;
+	width:0;
+
 	@include tabletish{
+		display:block;
 		width:$gfxWidth;
 	}
 	background-color:$gfxBGCol;

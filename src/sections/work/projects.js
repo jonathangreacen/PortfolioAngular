@@ -26,8 +26,9 @@
 				link:function(scope, $element){
 					scope.state = {};
 					scope.state.currentFocusedProject;
-					angular.element($window).on('scroll', highlightCurrentProject.bind(this));
+					angular.element($window).on('scroll', highlightCurrentProject);
 
+					highlightCurrentProject();
 					function highlightCurrentProject(){
 						var projects = scope.projects,
 							t = projects.length,
@@ -40,15 +41,16 @@
 
 						for(i; i<t; i++){
 							project = projects[i];
-							projectY = project.element.offsetTop;
+							projectY = project.$element[0].offsetTop;
 
-							if(currentFocusedProject !== project && midPoint > projectY - _winY && midPoint < projectY + parseInt(project.element.offsetHeight, 10) - _winY){
+							if(currentFocusedProject !== project && midPoint > projectY - _winY && 
+									midPoint < projectY + parseInt(project.$element[0].offsetHeight, 10) - _winY){
+
 								if(currentFocusedProject) {
-									angular.element(currentFocusedProject.element).scope().stopImagePreview();
+									currentFocusedProject.deactivate();
 								}
 								scope.state.currentFocusedProject = project;
-								angular.element(project.element).scope().startImagePreview();
-								scope.$apply();
+								project.activate();
 								break;
 							}
 						}
@@ -65,13 +67,26 @@
 				replace:true,
 				templateUrl:'../src/sections/work/project.tpl.html',
 				require:'^projects',
-				controller:function($scope){
+				controller:function($scope, $element){
+					$scope.imagePreview;
+
 					this.setImagePreview = function(imagePreview){
 						$scope.imagePreview = imagePreview;
 					}
+
+					$scope.activate = function(){
+						$element.addClass('active')
+						this.imagePreview.start();
+					}
+					$scope.deactivate = function(){
+						$element.removeClass('active')
+						this.imagePreview.stop();
+					}
+
 				},
 				link:function(scope, $element, attrs, controller){
-					controller.addProject({element:$element[0], data:scope.project});
+					scope.$element = $element;
+					controller.addProject(scope);
 				}
 			}
 		}]);

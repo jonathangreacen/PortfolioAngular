@@ -13,6 +13,9 @@ $imgPreviewBorderCol:#DBDBDB;
 $articleSelectedBGCol:#FFFFFF;
 $articleSelectedDividerCol:#EDEDED;
 $articleSummaryTxtCol:#333333;
+$articleSummarySelectionBGCol:#FFFFCC;
+$articleH1SelectionBGCol:#FFCCEE;
+$articleInfoSelectionBGCol:#CCEEFF;
 
 $footerBGCol:#FFFFFF;
 $footerDividerCol:#EDEDED;
@@ -20,7 +23,7 @@ $footerTxtCol:#CACACA;
 @function em($pxval, $base:16){
 	@return ($pxval / $base) * 1em;
 }
-$tabletish-width: 421px;
+$tabletish-width: 520px;
 $desktopish-width: 800px;
 $lobbyDisplayish-width:1560px;
 
@@ -106,13 +109,15 @@ $gfxContentMargin:30px;
 	}
 }
 .js .gfx{
-	display:block;
+	display:none;
 	height:100%;
 	margin:0;
 	padding:0;
 
-	width:0;//$gfxWidth;
+	width:0;
+
 	@include tabletish{
+		display:block;
 		width:$gfxWidth;
 	}
 	background-color:$gfxBGCol;
@@ -158,8 +163,6 @@ nav{
 	position:relative;
 	display:block;
 	margin:em(20) 0;
-	background-color:$imgPreviewBGCol;
-	border:1px solid $imgPreviewBorderCol;
 
 	img{
 		max-width:100%;
@@ -186,20 +189,25 @@ nav{
 		padding:em(25) em(10) em(35) em(10);
 		@include vendorPrefixer(transition, background-color .75s linear);
 
-		&.selected{
+		&.active{
 			background-color:$articleSelectedBGCol;
 			border-top:1px solid $articleSelectedDividerCol;
 			border-bottom:1px solid $articleSelectedDividerCol;			
 		}
 
 		h1{
-			font-size:em(22);
+			font-size:em(28);
 			font-style:italic;
 			font-weight:normal;
-			line-height:1.5em;
+			line-height:1.333em;
 			vertical-align:baseline;
-			margin:0;
+			margin:em(10) 0;
 			color:$articleSummaryTxtCol;
+
+			&::selection, span::selection{
+				background:$articleH1SelectionBGCol;
+				color:$baseTxtCol;
+			}
 		}
 		
 		.description{
@@ -213,11 +221,15 @@ nav{
 			}
 
 			p{
+				$fontSize:18;
+				font-size:em($fontSize, 16);
 				margin:0;
-				padding:em(0) em(10) em(16) em(6);
-				font-size:1em;
-				line-height:1.333em;
+				padding:em(0, $fontSize) em(10, $fontSize) em(16, $fontSize) em(6, $fontSize);				
+				line-height:em(24, $fontSize);
 				color:$baseTxtCol;
+				&::selection, i::selection{
+					background:$articleSummarySelectionBGCol;
+				}
 			}
 			a.btn{
 				background-color:$linkBtnBGCol;
@@ -241,6 +253,9 @@ nav{
 			margin:0;
 			li{
 				line-height:1.5em;
+				&::selection, strong::selection{
+					background:$articleInfoSelectionBGCol;
+				}
 			}
 		}
 	}

@@ -2,9 +2,9 @@
 	'use strict';
 	
 	var module = angular.module('workshop.portfolio');	
-		module.service('LogarithmicUniverse', ['$window', LogarithmicUniverse]);
+		module.service('LogarithmicUniverse', ['$window', 'Constants', LogarithmicUniverse]);
 
-	function LogarithmicUniverse($window){
+	function LogarithmicUniverse($window, Constants){
 		var ctx,
 			canvas,
 			width,
@@ -42,7 +42,7 @@
 			
 			arrow_data = new Image();
 			arrow_data.onload = onArrowDataLoaded.bind(this);
-			arrow_data.src = '/data/vis/logarithmic-arrow_3.png';
+			arrow_data.src = Constants.API_PATH + '/vis/logarithmic-arrow_3.png';
 		};
 
 		function onArrowDataLoaded(e){

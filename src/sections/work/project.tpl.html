@@ -1,5 +1,5 @@
 <article data-ng-class="{selected : state.currentFocusedProject.data === project}">
-	<div class="imagePreview" data-image-preview></div>
+	<div class="imagePreview" data-image-preview data-images="{{project.images}}"></div>
 	<h1><span data-ng-style="{color:project.color}">{{project.title}}</span> {{project.summary}}</h1>
 	<div class="description" data-ng-bind-html="project.description"></div>
 	<ul class="info">

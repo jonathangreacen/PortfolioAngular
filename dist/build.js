@@ -39,7 +39,7 @@
 		module.service('Constants', Constants);
 
 	function Constants(){
-		this.API_PATH 		= 'data/';
+		this.API_PATH 		= 'content/';
 		this.DEFAULT_VIEW 	= 'projects';
 		this.API_TYPE 		= 'json';
 		this.SECTIONS 		= [{label:'WORK',value:'projects'}, {label:'ABOUT',value:'about'}, {label:'CODE',value:'code'}, {label:'CONTACT',value:'contact'}];
@@ -120,9 +120,9 @@
 	'use strict';
 	
 	var module = angular.module('workshop.portfolio');	
-		module.service('LogarithmicUniverse', ['$window', LogarithmicUniverse]);
+		module.service('LogarithmicUniverse', ['$window', 'Constants', LogarithmicUniverse]);
 
-	function LogarithmicUniverse($window){
+	function LogarithmicUniverse($window, Constants){
 		var ctx,
 			canvas,
 			width,
@@ -160,7 +160,7 @@
 			
 			arrow_data = new Image();
 			arrow_data.onload = onArrowDataLoaded.bind(this);
-			arrow_data.src = '/data/vis/logarithmic-arrow_3.png';
+			arrow_data.src = Constants.API_PATH + '/vis/logarithmic-arrow_3.png';
 		};
 
 		function onArrowDataLoaded(e){
@@ -364,9 +364,7 @@
 			return {
 				restrict:'A',
 				scope:true,
-				controller:function($scope){
-					console.log("constants:", Constants)
-					
+				controller:function($scope){					
 					AppContent.getContentForView(VIEW_NAME).then(bindViewData);
 
 					function bindViewData(data){
@@ -380,10 +378,13 @@
 		}]);
 }(angular));;;;(function(angular){
 	var module = angular.module('workshop.portfolio');	
-		module.directive('imagePreview', ['$timeout', ImagePreview]);
+		module.directive('imagePreview', ['$document', '$timeout', '$window', 'Constants', ImagePreview]);
 
-	function ImagePreview($timeout){
+	function ImagePreview($document, $timeout, $window, Constants){
 		return {
+			scope:{
+				images : '@'
+			},
 			restrict:'A',
 			require:'^project',
 			link:function(scope, $element, attributes, controller){
@@ -396,51 +397,57 @@
 					RATE = 2000,					
 					NEXT_CLASSES = 'next',
 					CURRENT_CLASSES = 'current',
-					data = ['/data/projects/1.jpg', '/data/projects/2.jpg', '/data/projects/3.jpg', '/data/projects/4.jpg'];
-
+					data;
+				
 				init();
-				controller.setImagePreview($element);
-
-				this.running = false;
-				scope.startImagePreview = start.bind(this);
-				scope.stopImagePreview = stop.bind(this);
 
 				function init(){
+					scope.running = false;
+					scope.start = start;
+					scope.stop = stop;
+
+					data = JSON.parse(scope.images);
+					controller.setImagePreview(scope);
 					if(data){
-						img1 = document.createElement('img');
-						img2 = document.createElement('img');
+						img1 = $document[0].createElement('img');
+						img2 = $document[0].createElement('img');
 						img1.setAttribute('class', NEXT_CLASSES);
 						img2.setAttribute('class', CURRENT_CLASSES);
-						angular.element(img1).on('load', onLoad);
-						angular.element(img2).on('load', onLoad);
+					//	angular.element(img1).bind('load', onLoad);
+					//	angular.element(img2).bind('load', onLoad);
+						img1.addEventListener('load', onLoad);
+						img2.addEventListener('load', onLoad)
 						$element.append(img1);
 						$element.append(img2);
 						next = img1;
 						current = img2;
 						load();
+
+						angular.element($window).bind('resize', resize)
 					}
 				}
 				function load(){
-					var url = data[currentImageIndex];
-					next.src = url;
-					currentImageIndex = currentImageIndex < data.length - 2 ? ++currentImageIndex : 0;
+					var url = Constants.API_PATH + data[currentImageIndex];
+					currentImageIndex = currentImageIndex < data.length - 1 ? ++currentImageIndex : 0;
+					next.src = url + "?cacheBust="+ new Date().getTime();
 				}
-				function onLoad(evt){					
+				function onLoad(evt){
 					swap();
-					if(this.running){
+					if(scope.running===true){
 						reset();
 					}
 				}
 				function reset(){
-					load();
-					timeoutID = $timeout(load, RATE);
+					if(scope.running===true){
+						timeoutID = $timeout(load, RATE);
+					}
 				}
 				function start(){
-					this.running = true;
+					scope.running = true;
 					reset();
 				}
 				function stop(){
-					this.running = false;
+					scope.running = false;
 					$timeout.cancel(timeoutID);
 				}
 				function swap(){
@@ -450,12 +457,16 @@
 
 					next.className = NEXT_CLASSES;
 					current.className = CURRENT_CLASSES;
-
 					resize();
 				}
 				function resize(){
-					var h = current.clientHeight;
+					var h = current.height,
+						w = $element[0].clientWidth;		
 					$element[0].style.height = h + 'px';
+					current.style.left = ((w - current.width) / 2) + 'px'
+				}
+				function destroy(){
+					angular.element($window).unbind('resize', resize)
 				}
 			}
 		};
@@ -489,8 +500,9 @@
 				link:function(scope, $element){
 					scope.state = {};
 					scope.state.currentFocusedProject;
-					angular.element($window).on('scroll', highlightCurrentProject.bind(this));
+					angular.element($window).on('scroll', highlightCurrentProject);
 
+					highlightCurrentProject();
 					function highlightCurrentProject(){
 						var projects = scope.projects,
 							t = projects.length,
@@ -503,15 +515,16 @@
 
 						for(i; i<t; i++){
 							project = projects[i];
-							projectY = project.element.offsetTop;
+							projectY = project.$element[0].offsetTop;
 
-							if(currentFocusedProject !== project && midPoint > projectY - _winY && midPoint < projectY + parseInt(project.element.offsetHeight, 10) - _winY){
+							if(currentFocusedProject !== project && midPoint > projectY - _winY && 
+									midPoint < projectY + parseInt(project.$element[0].offsetHeight, 10) - _winY){
+
 								if(currentFocusedProject) {
-									angular.element(currentFocusedProject.element).scope().stopImagePreview();
+									currentFocusedProject.deactivate();
 								}
 								scope.state.currentFocusedProject = project;
-								angular.element(project.element).scope().startImagePreview();
-								scope.$apply();
+								project.activate();
 								break;
 							}
 						}
@@ -528,13 +541,26 @@
 				replace:true,
 				templateUrl:'../src/sections/work/project.tpl.html',
 				require:'^projects',
-				controller:function($scope){
+				controller:function($scope, $element){
+					$scope.imagePreview;
+
 					this.setImagePreview = function(imagePreview){
 						$scope.imagePreview = imagePreview;
 					}
+
+					$scope.activate = function(){
+						$element.addClass('active')
+						this.imagePreview.start();
+					}
+					$scope.deactivate = function(){
+						$element.removeClass('active')
+						this.imagePreview.stop();
+					}
+
 				},
 				link:function(scope, $element, attrs, controller){
-					controller.addProject({element:$element[0], data:scope.project});
+					scope.$element = $element;
+					controller.addProject(scope);
 				}
 			}
 		}]);

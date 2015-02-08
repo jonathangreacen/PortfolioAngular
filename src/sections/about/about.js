@@ -8,9 +8,7 @@
 			return {
 				restrict:'A',
 				scope:true,
-				controller:function($scope){
-					console.log("constants:", Constants)
-					
+				controller:function($scope){					
 					AppContent.getContentForView(VIEW_NAME).then(bindViewData);
 
 					function bindViewData(data){
