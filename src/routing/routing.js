@@ -9,6 +9,9 @@
 		.when('/about', {
 			templateUrl:'src/sections/about/about.tpl.html'
 		})
+		.when('/code', {
+			templateUrl:'src/sections/code/code.tpl.html'
+		})		
 		.when('/', {
 			templateUrl:'src/sections/work/projects.tpl.html'
 		})

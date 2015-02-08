@@ -2,4 +2,69 @@
 	width:100%;//$contentWidth;
 	margin:0;
 	height:inherit;
+
+	article{
+		margin:0;
+		padding:em(25) em(10) em(35) em(10);
+		@include vendorPrefixer(transition, background-color .75s linear);
+
+		&.active{
+			background-color:$articleSelectedBGCol;
+			border-top:1px solid $articleSelectedDividerCol;
+			border-bottom:1px solid $articleSelectedDividerCol;			
+		}
+
+		h1{
+			font-size:em(28);
+			font-style:italic;
+			font-weight:normal;
+			line-height:1.333em;
+			vertical-align:baseline;
+			margin:em(10) 0;
+			color:$articleSummaryTxtCol;
+
+			&::selection, span::selection{
+				background:$articleH1SelectionBGCol;
+				color:$baseTxtCol;
+			}
+		}
+		
+		.description{
+
+			@include desktopish{
+				@include vendorPrefixer(column-count, 2, webkit moz spec);
+			}
+
+			@include lobbyDisplayish{
+				@include vendorPrefixer(column-count, 3, webkit moz spec);
+			}
+
+			p{
+				$fontSize:18;
+				font-size:em($fontSize, 16);
+				margin:0;
+				padding:em(0, $fontSize) em(10, $fontSize) em(16, $fontSize) em(6, $fontSize);				
+				line-height:em(24, $fontSize);
+				color:$baseTxtCol;
+				&::selection, i::selection{
+					background:$articleSummarySelectionBGCol;
+				}
+			}
+			a.btn{
+				background-color:$linkBtnBGCol;
+				color:$linkBtnFGCol;
+				text-decoration:none;
+				padding:em(2) em(9);
+				margin:0 0 2 0;
+				transition:color 0.27s ease-out,background 0.2s ease-in;
+				&:hover, &:focus{
+					background-color:$linkBtnFGCol;
+					color:$linkBtnBGCol;
+				}
+				&::selection{
+					background:transparent;
+				}
+			}
+		}
+	}
 }

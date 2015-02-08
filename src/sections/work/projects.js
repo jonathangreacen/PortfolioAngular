@@ -4,7 +4,7 @@
 	var module = angular.module('workshop.portfolio'),
 		VIEW_NAME = 'projects';
  
-		module.directive('projects', ['$window', 'AppContent', 'Constants', function($window, AppContent, Constants){
+		module.directive('projects', ['$window', 'AppContent', 'Constants', 'GFXContentManager', function($window, AppContent, Constants, GFXContentManager){
 			return {
 				restrict:'A',
 				scope:true,
@@ -15,6 +15,7 @@
 					AppContent.getContentForView(VIEW_NAME).then(bindProjectData);
 
 					function bindProjectData(data){
+						GFXContentManager.requestVisualization(data.gfx);
 						$scope.projectsData = data;
 					};
 

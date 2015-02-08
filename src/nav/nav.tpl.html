@@ -1,4 +1,4 @@
 <nav>
 	<div class="homeBtn">WORKSHOP</div>
-	<div class="navItem" data-ng-repeat="section in navSections">{{section.label}}</div>
+	<a class="navItem" data-nav-button data-ng-click="onClick($event, section)" data-ng-repeat="section in navSections" href=''>{{section.label}}</a>
 </nav>

@@ -1,7 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Sorts+Mill+Goudy:400,400italic);
 .js .site footer {
   position: absolute;
-  bottom: 0;
+  bottom: -20px;
   height: 100px;
   width: 100%;
   text-align: right;
@@ -47,10 +47,86 @@
     background: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.08) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#14000000',GradientType=1 ); }
 
+.js nav .homeBtn {
+  display: inline-block; }
+.js nav .navItem {
+  color: #333333;
+  text-decoration: none;
+  float: right; }
+
+.js .site .content .about article h1 {
+  color: #09f; }
+
+.js .site .content .code article h1 {
+  color: #09f; }
+@media (min-width: 800px) {
+  .js .site .content .code article .description {
+    -webkit-column-count: 1;
+    -moz-column-count: 1;
+    column-count: 1; } }
+@media (min-width: 1560px) {
+  .js .site .content .code article .description {
+    -webkit-column-count: 1;
+    -moz-column-count: 1;
+    column-count: 1; } }
+
 .js .site .content {
   width: 100%;
   margin: 0;
   height: inherit; }
+  .js .site .content article {
+    margin: 0;
+    padding: 1.5625em 0.625em 2.1875em 0.625em;
+    -webkit-transition: background-color 0.75s linear;
+    -moz-transition: background-color 0.75s linear;
+    -ms-transition: background-color 0.75s linear;
+    -o-transition: background-color 0.75s linear;
+    transition: background-color 0.75s linear; }
+    .js .site .content article.active {
+      background-color: #FFFFFF;
+      border-top: 1px solid #EDEDED;
+      border-bottom: 1px solid #EDEDED; }
+    .js .site .content article h1 {
+      font-size: 1.75em;
+      font-style: italic;
+      font-weight: normal;
+      line-height: 1.333em;
+      vertical-align: baseline;
+      margin: 0.625em 0;
+      color: #333333; }
+      .js .site .content article h1::selection, .js .site .content article h1 span::selection {
+        background: #FFCCEE;
+        color: #686868; }
+    @media (min-width: 800px) {
+      .js .site .content article .description {
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        column-count: 2; } }
+    @media (min-width: 1560px) {
+      .js .site .content article .description {
+        -webkit-column-count: 3;
+        -moz-column-count: 3;
+        column-count: 3; } }
+    .js .site .content article .description p {
+      font-size: 1.125em;
+      margin: 0;
+      padding: 0em 0.55556em 0.88889em 0.33333em;
+      line-height: 1.33333em;
+      color: #686868; }
+      .js .site .content article .description p::selection, .js .site .content article .description p i::selection {
+        background: #FFFFCC; }
+    .js .site .content article .description a.btn {
+      background-color: #FF5948;
+      color: #FFFFFF;
+      text-decoration: none;
+      padding: 0.125em 0.5625em;
+      margin: 0 0 2 0;
+      transition: color 0.27s ease-out,background 0.2s ease-in; }
+      .js .site .content article .description a.btn:hover, .js .site .content article .description a.btn:focus {
+        background-color: #FFFFFF;
+        color: #FF5948; }
+      .js .site .content article .description a.btn::selection {
+        background: transparent; }
 
 .js .site .projects .imagePreview {
   width: 100%;
@@ -71,68 +147,17 @@
     .js .site .projects .imagePreview img:after {
       clear: both; }
 
-.js .site .projects article {
-  margin: 0;
-  padding: 1.5625em 0.625em 2.1875em 0.625em;
-  -webkit-transition: background-color 0.75s linear;
-  -moz-transition: background-color 0.75s linear;
-  -ms-transition: background-color 0.75s linear;
-  -o-transition: background-color 0.75s linear;
-  transition: background-color 0.75s linear; }
-  .js .site .projects article.active {
-    background-color: #FFFFFF;
-    border-top: 1px solid #EDEDED;
-    border-bottom: 1px solid #EDEDED; }
-  .js .site .projects article h1 {
-    font-size: 1.75em;
-    font-style: italic;
-    font-weight: normal;
-    line-height: 1.333em;
-    vertical-align: baseline;
-    margin: 0.625em 0;
-    color: #333333; }
-    .js .site .projects article h1::selection, .js .site .projects article h1 span::selection {
-      background: #FFCCEE;
-      color: #686868; }
-  @media (min-width: 800px) {
-    .js .site .projects article .description {
-      -webkit-column-count: 2;
-      -moz-column-count: 2;
-      column-count: 2; } }
-  @media (min-width: 1560px) {
-    .js .site .projects article .description {
-      -webkit-column-count: 3;
-      -moz-column-count: 3;
-      column-count: 3; } }
-  .js .site .projects article .description p {
-    font-size: 1.125em;
-    margin: 0;
-    padding: 0em 0.55556em 0.88889em 0.33333em;
-    line-height: 1.33333em;
-    color: #686868; }
-    .js .site .projects article .description p::selection, .js .site .projects article .description p i::selection {
-      background: #FFFFCC; }
-  .js .site .projects article .description a.btn {
-    background-color: #FF5948;
-    color: #FFFFFF;
-    text-decoration: none;
-    padding: 0.125em 0.5625em;
-    margin: 0 0 2 0;
-    transition: color 0.27s ease-out,background 0.2s ease-in; }
-    .js .site .projects article .description a.btn:hover, .js .site .projects article .description a.btn:focus {
-      background-color: #FFFFFF;
-      color: #FF5948; }
-  .js .site .projects article ul.info {
-    list-style-type: none;
-    font-family: Arial,Helvetica,sans-serif;
-    color: #B7B7B7;
-    font-size: 0.8125em;
-    padding: 0;
-    margin: 0; }
-    .js .site .projects article ul.info li {
-      line-height: 1.5em; }
-      .js .site .projects article ul.info li::selection, .js .site .projects article ul.info li strong::selection {
-        background: #CCEEFF; }
+.js .site .projects article ul.info {
+  list-style-type: none;
+  font-family: Arial,Helvetica,sans-serif;
+  color: #B7B7B7;
+  font-size: 0.8125em;
+  padding: 0;
+  margin: 0; }
+  .js .site .projects article ul.info li {
+    line-height: 1.5em; }
+    .js .site .projects article ul.info li::selection, .js .site .projects article ul.info li strong::selection {
+      background: transparent; }
 
 html, body {
   background-color: #F7F7F7;
@@ -154,7 +179,7 @@ html, body {
       margin-left: 255px;
       padding-right: 30px; } }
   .js .site .content {
-    padding-bottom: 100px; }
+    padding-bottom: 120px; }
   .js .site .noJS {
     display: none; }
 

@@ -3,8 +3,9 @@
 	var module = angular.module('workshop.portfolio'),
 		VIEW_NAME = 'about';
 		
+		module.directive(VIEW_NAME, ['AppContent', 'Constants', 'GFXContentManager', About]);
 
-		module.directive('about', ['AppContent', 'Constants', function(AppContent, Constants){
+		function About(AppContent, Constants, GFXContentManager){
 			return {
 				restrict:'A',
 				scope:true,
@@ -12,12 +13,13 @@
 					AppContent.getContentForView(VIEW_NAME).then(bindViewData);
 
 					function bindViewData(data){
-						$scope.projectsData = data;
+						GFXContentManager.requestVisualization(data.gfx);
+						$scope[VIEW_NAME + 'Data'] = data;
 					}
 				},
 				link:function(scope, element, attrs){
 
 				}
 			}
-		}]);
+		};
 }(angular));

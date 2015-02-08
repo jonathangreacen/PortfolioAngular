@@ -29,20 +29,23 @@
 		this.init = init;
 
 		function init(_c){
-			canvas = _c;
-			ctx = canvas.getContext('2d');
-			resize();
-			canvas.style.backgroundColor = '#F2FEF1';
-			dim = 1000;
-			dim_log = Math.log(dim);
-			this.running = false;
-			xOff = width+10;
-			yOff = 200;
-			arrows = [];
-			
-			arrow_data = new Image();
-			arrow_data.onload = onArrowDataLoaded.bind(this);
-			arrow_data.src = Constants.API_PATH + '/vis/logarithmic-arrow_3.png';
+			if(this.initialized === false){
+				canvas = _c;
+				ctx = canvas.getContext('2d');
+				resize();
+				canvas.style.backgroundColor = '#F2FEF1';
+				dim = 1000;
+				dim_log = Math.log(dim);
+				this.running = false;
+				xOff = width+10;
+				yOff = 200;
+				arrows = [];
+				
+				arrow_data = new Image();
+				arrow_data.onload = onArrowDataLoaded.bind(this);
+				arrow_data.src = Constants.API_PATH + '/vis/logarithmic-arrow_3.png';
+				this.initialized = true;
+			}
 		};
 
 		function onArrowDataLoaded(e){

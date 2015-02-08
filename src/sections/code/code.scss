@@ -1,0 +1,16 @@
+.js .site .content .code{
+	article{
+		h1{
+			color:#09f;
+		}
+		.description{
+			@include desktopish{
+				@include vendorPrefixer(column-count, 1, webkit moz spec);
+			}
+
+			@include lobbyDisplayish{
+				@include vendorPrefixer(column-count, 1, webkit moz spec);
+			}
+		}
+	}
+}

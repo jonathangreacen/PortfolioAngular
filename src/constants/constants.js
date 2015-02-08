@@ -6,8 +6,7 @@
 		this.API_PATH 		= 'content/';
 		this.DEFAULT_VIEW 	= 'projects';
 		this.API_TYPE 		= 'json';
-		this.SECTIONS 		= [{label:'WORK',value:'projects'}, {label:'ABOUT',value:'about'}, {label:'CODE',value:'code'}, {label:'CONTACT',value:'contact'}];
-		this.currentVisualization;
+		this.SECTIONS 		= [{label:'WORK',value:'projects',url:'work'}, {label:'ABOUT',value:'about',url:'about'}, {label:'CODE',value:'code',url:'code'}, {label:'CONTACT',value:'contact',url:'contact'}];
 	};
 
 }(angular));

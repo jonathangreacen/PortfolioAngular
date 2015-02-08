@@ -1,6 +1,8 @@
 $bgColor:#F7F7F7;
 $gfxBGCol:#F2FEF1;
 
+$navButtonColor:#333333;
+
 $baseTxtCol:#686868;
 $listTxtCol:#B7B7B7;
 
@@ -15,7 +17,7 @@ $articleSelectedDividerCol:#EDEDED;
 $articleSummaryTxtCol:#333333;
 $articleSummarySelectionBGCol:#FFFFCC;
 $articleH1SelectionBGCol:#FFCCEE;
-$articleInfoSelectionBGCol:#CCEEFF;
+$articleInfoSelectionBGCol:transparent;//#CCEEFF;
 
 $footerBGCol:#FFFFFF;
 $footerDividerCol:#EDEDED;
@@ -85,7 +87,7 @@ $gfxContentMargin:30px;
 }
 .js .site footer{
 	position:absolute;
-	bottom:0;
+	bottom:-20px;//0;
 	height:$footerHeight;
 	width:100%;//$contentWidth;
 	text-align:right;
@@ -146,44 +148,48 @@ $gfxContentMargin:30px;
 	}
 }
 
-nav{
-	
+.js nav{
+	.homeBtn{
+		display:inline-block;
+	}
+	.navItem{
+		color:$navButtonColor;
+		text-decoration:none;
+		float:right;
+	}
 }
 
 .gfx, .site, footer{
 	//display:none;
 }
+.js .site .content .about{
+	article{
+		h1{
+			color:#09f;
+		}
+	}
+}
+.js .site .content .code{
+	article{
+		h1{
+			color:#09f;
+		}
+		.description{
+			@include desktopish{
+				@include vendorPrefixer(column-count, 1, webkit moz spec);
+			}
+
+			@include lobbyDisplayish{
+				@include vendorPrefixer(column-count, 1, webkit moz spec);
+			}
+		}
+	}
+}
 .js .site .content{
 	width:100%;//$contentWidth;
 	margin:0;
 	height:inherit;
-}
-.js .site .projects .imagePreview{
-	width:100%;
-	position:relative;
-	display:block;
-	margin:em(20) 0;
 
-	img{
-		max-width:100%;
-		min-height:100px;
-		position:absolute;
-		transition:opacity .75s linear;
-		&.next{
-			z-index:1;
-			opacity:0;
-		}
-		&.current{
-			opacity:1;
-			z-index:2;
-		}
-		&:after{
-			clear:both;
-			}
-
-	}
-}
-.js .site .projects{
 	article{
 		margin:0;
 		padding:em(25) em(10) em(35) em(10);
@@ -242,8 +248,40 @@ nav{
 					background-color:$linkBtnFGCol;
 					color:$linkBtnBGCol;
 				}
+				&::selection{
+					background:transparent;
+				}
 			}
 		}
+	}
+}
+.js .site .projects .imagePreview{
+	width:100%;
+	position:relative;
+	display:block;
+	margin:em(20) 0;
+
+	img{
+		max-width:100%;
+		min-height:100px;
+		position:absolute;
+		transition:opacity .75s linear;
+		&.next{
+			z-index:1;
+			opacity:0;
+		}
+		&.current{
+			opacity:1;
+			z-index:2;
+		}
+		&:after{
+			clear:both;
+			}
+
+	}
+}
+.js .site .projects{
+	article{
 		ul.info{
 			list-style-type:none;
 			font-family:Arial,Helvetica,sans-serif;
@@ -284,7 +322,7 @@ html, body{
 		padding-right:$gfxContentMargin;
 	}
 	.content{
-		padding-bottom:$footerHeight;
+		padding-bottom:$footerHeight+20;
 	}
 
 	.noJS{
