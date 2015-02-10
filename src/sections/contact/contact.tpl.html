@@ -1,0 +1,12 @@
+<section data-contact class="contact" role="">
+	<article data-ng-repeat="content in contactData.items">
+		<h1>{{content.title}}</h1>
+		<div class="description" data-ng-bind-html="content.description"></div>
+		<form>
+			<input type='text'/>
+			<input type='text'/>
+			<input type='text'/>
+			<input type='submit'/>
+		</form>
+	</article>
+</section>

@@ -3,7 +3,8 @@
   position: absolute;
   bottom: -20px;
   height: 100px;
-  width: 100%;
+  left: 0;
+  right: 30px;
   text-align: right;
   background-color: #FFFFFF;
   border-top: 1px solid #EDEDED; }
@@ -31,8 +32,7 @@
       width: 225px; } }
   .js .gfx canvas {
     width: 225px;
-    height: 100%;
-    background-color: #0f0; }
+    height: 100%; }
   .js .gfx .dropoffShadow {
     position: absolute;
     width: 8px;

@@ -57,7 +57,6 @@
 		};
 		
 		function resize(){
-			canvas.height = window.innerHeight;
 			width = canvas.width;
 			height = canvas.height;
 		};

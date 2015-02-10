@@ -53,7 +53,7 @@
 			
 		};		
 		this.resize = function(){
-			_h = c.height;
+			_h = c.height ;
 		};
 		this.init = function(_canvas){
 			if(this.initialized === false){
@@ -66,6 +66,7 @@
 				run();
 				this.initialized = true;
 			}
+			this.resize();
 		};
 		this.destroy = function(){
 

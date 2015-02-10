@@ -15,7 +15,7 @@
 			fScl,
 			running=true,
 			pauseID,
-			pauseInterval = 3500,
+			pauseInterval = 5500,
 			animationCountTotal = 123*2,
 			animationCount=0,
 			mutation=0,
@@ -44,7 +44,6 @@
 			animationCount++;
 		};
 		this.resize = function(){
-			canvas.height = $window.innerHeight
 			this.interact();
 		}
 		this.init = function(_canvas){
@@ -116,13 +115,13 @@
 			var colSize = Math.ceil(canvas.width / cols),
 				rowSize = Math.ceil(canvas.height / rows),
 				swatchPoint,grade,
+				i,j,
 				x,y,t = colors.length;
-				ctx.strokeStyle = (alpha < 1) ? 'rgba(0,0,0,'+alpha/20+')' : 'rgba(0,0,0,.056)';
-			for(var i=0; i<cols; i++){
-				for(var j=0; j<rows; j++){
+				ctx.strokeStyle = (alpha < 1) ? 'rgba(0,0,0,'+alpha/40+')' : 'rgba(0,0,0,.056)';
+			for(i=0; i<cols; i++){
+				for(j=0; j<rows; j++){
 					x = i;
-					y = j;
-					
+					y = j;					
 					swatchPoint = {x:(Math.floor(i*(swatch.width/cols))),y:(Math.floor(j*(swatch.height/rows)))};
 					grade = imageData.data[(swatchPoint.x + swatchPoint.y * imageData.width) * 4];
 					var c = colors[Math.floor(((grade / 255)) * t)] ; 

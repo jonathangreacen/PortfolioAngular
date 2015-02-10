@@ -12,10 +12,13 @@
 		.when('/code', {
 			templateUrl:'src/sections/code/code.tpl.html'
 		})		
+		.when('/contact', {
+			templateUrl:'src/sections/contact/contact.tpl.html'
+		})		
 		.when('/', {
 			templateUrl:'src/sections/work/projects.tpl.html'
 		})
-		.otherwise({redirectTo:'/'});
+		.otherwise({redirectTo:'/'}); 
 	};
 
 }(angular));

@@ -2,7 +2,8 @@
 	position:absolute;
 	bottom:-20px;//0;
 	height:$footerHeight;
-	width:100%;//$contentWidth;
+	left:0;
+	right:$gfxContentMargin;
 	text-align:right;
 	background-color:$footerBGCol;
 	border-top:1px solid $footerDividerCol;

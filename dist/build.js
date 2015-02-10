@@ -49,18 +49,18 @@
 	'use strict';
 
 	var module = angular.module('workshop.portfolio');	
-		module.service('GFXContentManager', ['Brownian', 'LogarithmicUniverse', 'PerlinBlocks', GFXContentManager]);
+		module.service('GFXContentManager', ['Brownian', 'ColorGrade', 'LogarithmicUniverse', 'PerlinBlocks', GFXContentManager]);
 
-	function GFXContentManager(Brownian, LogarithmicUniverse, PerlinBlocks){/*, Brownian, ColorCycle*/
+	function GFXContentManager(Brownian, ColorGrade, LogarithmicUniverse, PerlinBlocks){/*, Brownian, ColorCycle*/
 		this.visualizations = { 'logarithmic-universe':LogarithmicUniverse,
 								'perlin-blocks':PerlinBlocks,
-								'brownian':Brownian/*,
-								'color-cycle':ColorCycle*/
+								'brownian':Brownian,
+								'color-grade':ColorGrade
 							}; 
-		this.currentVisualization = this.visualizations['logarithmic-universe'];
+		this.currentVisualization;
 		this.requestVisualization = function(_name){
 			var vis = this.visualizations[_name];
-			if(vis){
+			if(typeof vis !== 'undefined'){
 				this.currentVisualization = vis;
 			}
 		}
@@ -279,7 +279,7 @@
 			
 		};		
 		this.resize = function(){
-			_h = c.height;
+			_h = c.height ;
 		};
 		this.init = function(_canvas){
 			if(this.initialized === false){
@@ -292,6 +292,7 @@
 				run();
 				this.initialized = true;
 			}
+			this.resize();
 		};
 		this.destroy = function(){
 
@@ -361,12 +362,105 @@
 
 }(angular));;(function(angular){
 	'use strict';
+	
+	var module = angular.module('workshop.portfolio');	
+		module.service('ColorGrade', ['$window', 'Drawing', ColorGrade]);
+
+	function ColorGrade($window, Drawing){
+		var canvas,
+			context,
+			colors,
+			rows,
+			cols,
+			w,
+			h,
+			animationID,
+			endpoints,
+			drawing,
+			running,
+			alpha=0,
+			drawFrame = true,
+			count = 0;
+
+		this.initialized = false;
+		this.running = false;
+
+		this.init = function(_canvas){
+			var fragments;
+			if(this.initialized === false){
+				canvas = _canvas;
+				canvas.width = 161;
+				canvas.height = document.height;
+				context = canvas.getContext('2d');
+				canvas.style.cursor = 'auto';
+				rows = 11;
+				cols = 3;
+				w = canvas.width / cols;
+				h = canvas.height / rows;
+				
+				fragments = (rows + cols)*4;
+				if(!colors){
+					endpoints = [0x80B6CC, 0xD22B0D, 0xFFFF99, 0x287961 ];
+					colors = Drawing.colorGrade(endpoints[0], endpoints[1], fragments);
+					colors = Drawing.colorGrade(endpoints[1], endpoints[2], fragments, colors);
+					colors = Drawing.colorGrade(endpoints[2], endpoints[3], fragments, colors);
+					colors = Drawing.colorGrade(endpoints[3], endpoints[2], fragments, colors);
+					colors = Drawing.colorGrade(endpoints[2], endpoints[1], fragments, colors);
+					colors = Drawing.colorGrade(endpoints[1], endpoints[0], fragments, colors);
+				}
+			}
+			this.resize();
+			running = true;
+		};
+		this.update = function(){
+			drawFrame = count/3 === Math.floor(count/3);
+			count++;
+		}
+		this.draw = function(){
+			var i = 0, j, x, y, color;
+			if(drawFrame){
+				context.strokeStyle = 'rgba(0,0,0,.044)';
+				context.lineWidth = 1;
+				context.globalAlpha = alpha;
+				alpha += .08;
+				alpha = (alpha < 1) ? alpha : 1;
+				for(i; i<cols; i++){		
+					x = i * w;
+					for(j=0; j<rows; j++){
+						y = j * h;
+						color = '#' + colors[i + j].toString(16);
+						
+						context.fillStyle = color;
+						context.beginPath();
+						context.rect(x, y, w, h);
+						context.closePath();
+						context.stroke();
+						context.fill();
+					}
+				}
+				colors.unshift( colors.pop() );
+			}
+		};
+		this.resize = function(){
+			w = canvas.width / cols;
+			h = canvas.height / rows;
+		};		
+		this.interact = function(){
+
+		};
+		this.destroy = function(){
+			context.globalAlpha = 1;
+			running = false;
+		};
+	};
+
+}(angular));;(function(angular){
+	'use strict';
 
 	var module = angular.module('workshop.portfolio');	
 		module.service('Drawing', [Drawing]);
 
 	function Drawing(){
-
 		this.combineRGB = function(r,g,b){
 			return (r<<16) | (g<<8) | b;
 		}
@@ -384,7 +478,8 @@
 				c2 		= {r:col2RGB[0], g:col2RGB[1], b:col2RGB[2], rgb:col2RGB},
 				mix 	= {r:((c2.r - c1.r)/fragments), g:((c2.g - c1.g)/fragments), b:((c2.b - c1.b)/fragments)},
 				grades 	= arr || [],
-				i = 0, hex;
+				i = 0, 
+				hex;
 			for(; i<fragments; i++){
 				grades.push( this.combineRGB(c1.r + mix.r*i, c1.g + mix.g*i, c1.b + mix.b*i) );
 			}
@@ -408,24 +503,29 @@
 				var canvas = document.createElement('canvas'),
 					vis,
 					runVis = true;
-				
+					
 				$element.append(canvas);
 				init();
 
 				function draw(){
-					if(vis !== GFXContentManager.currentVisualization){
-						vis = GFXContentManager.currentVisualization;
-						vis.init(canvas);
-						vis.interact();
+					if(typeof GFXContentManager.currentVisualization !== 'undefined'){
+						if(vis !== GFXContentManager.currentVisualization){
+							vis = GFXContentManager.currentVisualization;
+							vis.init(canvas);
+							vis.interact();
+						}						
+						if(runVis === true){						
+							vis.update();
+							vis.draw();
+						}
 					}
 					requestAnimationFrame(draw);
-					if(typeof vis !== undefined && runVis === true){						
-						vis.update();
-						vis.draw();
-					}
 				}
 				function resize(){
-					vis.resize();
+					canvas.height = $window.innerHeight;
+					if(typeof vis !== 'undefined'){
+						vis.resize();
+					}
 				}
 				function interact(evt){
 					vis.interact(evt);
@@ -434,6 +534,8 @@
 					runVis = mediaQueryList.matches;
 				}				
 				function init(){
+					resize();
+					
 					//For performance when in small/mobile format
 					var matchingLargeFormat = window.matchMedia("(min-width : 520px)");
 						matchingLargeFormat.addListener(toggleVisRunningByMQ);
@@ -504,7 +606,6 @@
 		};
 		
 		function resize(){
-			canvas.height = window.innerHeight;
 			width = canvas.width;
 			height = canvas.height;
 		};
@@ -634,7 +735,7 @@
 			fScl,
 			running=true,
 			pauseID,
-			pauseInterval = 3500,
+			pauseInterval = 5500,
 			animationCountTotal = 123*2,
 			animationCount=0,
 			mutation=0,
@@ -663,7 +764,6 @@
 			animationCount++;
 		};
 		this.resize = function(){
-			canvas.height = $window.innerHeight
 			this.interact();
 		}
 		this.init = function(_canvas){
@@ -735,13 +835,13 @@
 			var colSize = Math.ceil(canvas.width / cols),
 				rowSize = Math.ceil(canvas.height / rows),
 				swatchPoint,grade,
+				i,j,
 				x,y,t = colors.length;
-				ctx.strokeStyle = (alpha < 1) ? 'rgba(0,0,0,'+alpha/20+')' : 'rgba(0,0,0,.056)';
-			for(var i=0; i<cols; i++){
-				for(var j=0; j<rows; j++){
+				ctx.strokeStyle = (alpha < 1) ? 'rgba(0,0,0,'+alpha/40+')' : 'rgba(0,0,0,.056)';
+			for(i=0; i<cols; i++){
+				for(j=0; j<rows; j++){
 					x = i;
-					y = j;
-					
+					y = j;					
 					swatchPoint = {x:(Math.floor(i*(swatch.width/cols))),y:(Math.floor(j*(swatch.height/rows)))};
 					grade = imageData.data[(swatchPoint.x + swatchPoint.y * imageData.width) * 4];
 					var c = colors[Math.floor(((grade / 255)) * t)] ; 
@@ -1001,10 +1101,13 @@
 		.when('/code', {
 			templateUrl:'src/sections/code/code.tpl.html'
 		})		
+		.when('/contact', {
+			templateUrl:'src/sections/contact/contact.tpl.html'
+		})		
 		.when('/', {
 			templateUrl:'src/sections/work/projects.tpl.html'
 		})
-		.otherwise({redirectTo:'/'});
+		.otherwise({redirectTo:'/'}); 
 	};
 
 }(angular));;(function(angular){
@@ -1055,7 +1158,31 @@
 				}
 			}
 		};
-}(angular));;;(function(angular){
+}(angular));;(function(angular){
+	'use strict';
+	var module = angular.module('workshop.portfolio'),
+		VIEW_NAME = 'contact';
+		
+		module.directive(VIEW_NAME, ['AppContent', 'Constants', 'GFXContentManager', Contact]);
+
+		function Contact(AppContent, Constants, GFXContentManager){
+			return {
+				restrict:'A',
+				scope:true,
+				controller:function($scope){
+					AppContent.getContentForView(VIEW_NAME).then(bindViewData);
+
+					function bindViewData(data){
+						GFXContentManager.requestVisualization(data.gfx);
+						$scope[VIEW_NAME + 'Data'] = data;
+					}
+				},
+				link:function(scope, element, attrs){
+
+				}
+			}
+		};
+}(angular));;(function(angular){
 	var module = angular.module('workshop.portfolio');	
 		module.directive('imagePreview', ['$document', '$timeout', '$window', 'Constants', ImagePreview]);
 

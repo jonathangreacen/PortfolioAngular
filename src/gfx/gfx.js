@@ -13,24 +13,29 @@
 				var canvas = document.createElement('canvas'),
 					vis,
 					runVis = true;
-				
+					
 				$element.append(canvas);
 				init();
 
 				function draw(){
-					if(vis !== GFXContentManager.currentVisualization){
-						vis = GFXContentManager.currentVisualization;
-						vis.init(canvas);
-						vis.interact();
+					if(typeof GFXContentManager.currentVisualization !== 'undefined'){
+						if(vis !== GFXContentManager.currentVisualization){
+							vis = GFXContentManager.currentVisualization;
+							vis.init(canvas);
+							vis.interact();
+						}						
+						if(runVis === true){						
+							vis.update();
+							vis.draw();
+						}
 					}
 					requestAnimationFrame(draw);
-					if(typeof vis !== undefined && runVis === true){						
-						vis.update();
-						vis.draw();
-					}
 				}
 				function resize(){
-					vis.resize();
+					canvas.height = $window.innerHeight;
+					if(typeof vis !== 'undefined'){
+						vis.resize();
+					}
 				}
 				function interact(evt){
 					vis.interact(evt);
@@ -39,6 +44,8 @@
 					runVis = mediaQueryList.matches;
 				}				
 				function init(){
+					resize();
+					
 					//For performance when in small/mobile format
 					var matchingLargeFormat = window.matchMedia("(min-width : 520px)");
 						matchingLargeFormat.addListener(toggleVisRunningByMQ);
