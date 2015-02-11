@@ -2,9 +2,9 @@
 	'use strict';
 	
 	var module = angular.module('workshop.portfolio');	
-		module.service('ColorGrade', ['$window', 'Drawing', ColorGrade]);
+		module.service('ColorGrade', ['$window', '$document', 'Drawing', ColorGrade]);
 
-	function ColorGrade($window, Drawing){
+	function ColorGrade($window, $document, Drawing){
 		var canvas,
 			context,
 			colors,
@@ -27,14 +27,10 @@
 			var fragments;
 			if(this.initialized === false){
 				canvas = _canvas;
-				canvas.width = 161;
-				canvas.height = document.height;
 				context = canvas.getContext('2d');
 				canvas.style.cursor = 'auto';
 				rows = 11;
 				cols = 3;
-				w = canvas.width / cols;
-				h = canvas.height / rows;
 				
 				fragments = (rows + cols)*4;
 				if(!colors){
