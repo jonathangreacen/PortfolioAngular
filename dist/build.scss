@@ -84,7 +84,7 @@ $gfxContentMargin:30px;
 			}
 		}
 }
-.js .site footer{
+.site footer{
 	position:absolute;
 	bottom:-20px;//0;
 	height:$footerHeight;
@@ -156,9 +156,11 @@ $gfxContentMargin:30px;
 		float:right;
 	}
 }
-
-.gfx, .site, footer{
-	//display:none;
+.gfx, .content{
+	display:none;
+}
+.noJS{
+	margin:0 $gfxContentMargin;
 }
 .js .site .content .about{
 	article{
@@ -216,14 +218,6 @@ $gfxContentMargin:30px;
 		
 		.description{
 
-			@include desktopish{
-				@include vendorPrefixer(column-count, 2, webkit moz spec);
-			}
-
-			@include lobbyDisplayish{
-				@include vendorPrefixer(column-count, 3, webkit moz spec);
-			}
-
 			p{
 				$fontSize:18;
 				font-size:em($fontSize, 16);
@@ -235,6 +229,16 @@ $gfxContentMargin:30px;
 					background:$articleSummarySelectionBGCol;
 				}
 			}
+
+			a.link, a.link:active{
+				color:$linkBtnBGCol;
+				background-color:$linkBtnFGCol;
+				&::selection{
+					background-color:#000000;
+					color:#FFFFFF;
+				}
+			}
+
 			a.btn{
 				background-color:$linkBtnBGCol;
 				color:$linkBtnFGCol;
@@ -280,6 +284,16 @@ $gfxContentMargin:30px;
 }
 .js .site .projects{
 	article{
+		.description{
+			@include desktopish{
+				@include vendorPrefixer(column-count, 2, webkit moz spec);
+			}
+
+			@include lobbyDisplayish{
+				@include vendorPrefixer(column-count, 3, webkit moz spec);
+			}
+		}
+		
 		ul.info{
 			list-style-type:none;
 			font-family:Arial,Helvetica,sans-serif;
@@ -307,23 +321,28 @@ html, body{
 	font-size:1em;
 }
 
-.js .site{
-	position:relative;
-	min-height:100%;
-	padding:0;
-	margin:0;
-	margin-left:$gfxContentMargin/2;
-	padding-right:$gfxContentMargin/2;
-
-	@include tabletish{
-		margin-left:$gfxWidth + $gfxContentMargin;
-		padding-right:$gfxContentMargin;
+.js {
+	.gfx{
+		display:block;
 	}
-	.content{
-		padding-bottom:$footerHeight+20;
-	}
+	.site{
+		position:relative;
+		min-height:100%;
+		padding:0;
+		margin:0;
+		margin-left:$gfxContentMargin/2;
+		padding-right:$gfxContentMargin/2;
 
-	.noJS{
-		display:none;
+		@include tabletish{
+			margin-left:$gfxWidth + $gfxContentMargin;
+			padding-right:$gfxContentMargin;
+		}
+		.content{
+			display:block;
+			padding-bottom:$footerHeight+20;
+		}
+		.noJS{
+			display:none;
+		}
 	}
 }

@@ -8,23 +8,28 @@ html, body{
 	font-size:1em;
 }
 
-.js .site{
-	position:relative;
-	min-height:100%;
-	padding:0;
-	margin:0;
-	margin-left:$gfxContentMargin/2;
-	padding-right:$gfxContentMargin/2;
-
-	@include tabletish{
-		margin-left:$gfxWidth + $gfxContentMargin;
-		padding-right:$gfxContentMargin;
+.js {
+	.gfx{
+		display:block;
 	}
-	.content{
-		padding-bottom:$footerHeight+20;
-	}
+	.site{
+		position:relative;
+		min-height:100%;
+		padding:0;
+		margin:0;
+		margin-left:$gfxContentMargin/2;
+		padding-right:$gfxContentMargin/2;
 
-	.noJS{
-		display:none;
+		@include tabletish{
+			margin-left:$gfxWidth + $gfxContentMargin;
+			padding-right:$gfxContentMargin;
+		}
+		.content{
+			display:block;
+			padding-bottom:$footerHeight+20;
+		}
+		.noJS{
+			display:none;
+		}
 	}
 }

@@ -1,5 +1,15 @@
 .js .site .projects{
 	article{
+		.description{
+			@include desktopish{
+				@include vendorPrefixer(column-count, 2, webkit moz spec);
+			}
+
+			@include lobbyDisplayish{
+				@include vendorPrefixer(column-count, 3, webkit moz spec);
+			}
+		}
+		
 		ul.info{
 			list-style-type:none;
 			font-family:Arial,Helvetica,sans-serif;

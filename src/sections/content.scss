@@ -31,14 +31,6 @@
 		
 		.description{
 
-			@include desktopish{
-				@include vendorPrefixer(column-count, 2, webkit moz spec);
-			}
-
-			@include lobbyDisplayish{
-				@include vendorPrefixer(column-count, 3, webkit moz spec);
-			}
-
 			p{
 				$fontSize:18;
 				font-size:em($fontSize, 16);
@@ -50,6 +42,16 @@
 					background:$articleSummarySelectionBGCol;
 				}
 			}
+
+			a.link, a.link:active{
+				color:$linkBtnBGCol;
+				background-color:$linkBtnFGCol;
+				&::selection{
+					background-color:#000000;
+					color:#FFFFFF;
+				}
+			}
+
 			a.btn{
 				background-color:$linkBtnBGCol;
 				color:$linkBtnFGCol;

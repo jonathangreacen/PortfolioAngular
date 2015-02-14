@@ -1,4 +1,6 @@
-
-.gfx, .site, footer{
-	//display:none;
+.gfx, .content{
+	display:none;
+}
+.noJS{
+	margin:0 $gfxContentMargin;
 }
