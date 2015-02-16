@@ -1,10 +1,62 @@
 .js nav{
-	.homeBtn{
+	position:fixed;
+	height:$collapsedNavHeight;
+	vertical-align:bottom;
+	left:$gfxContentMargin;
+	right:$gfxContentMargin;
+	z-index:5;
+	background-color:$navBGColor;
+	border-bottom:1px solid $navBorderBottomColor;
+	@include vendorPrefixer(transition, height .5s linear);
+
+	&.expanded{
+		height:$expandedNavHeight;
+	}
+
+	@include tabletish{
+			margin-left:$gfxWidth;
+		}
+	.homeBtn {	
+		padding:0 0 0 em(10);
+		a{
+			display:inline-block;
+			width:em(75);
+			padding:$navButtonHeight em(10) 0px em(10);
+
+			background:url(../content/WORKSHOP_small.png) no-repeat left;
+		}
+	}
+	.sectionButtons{
+		right:0;
+		bottom:0;		
+		padding:0;
+	}
+	.homeBtn, .sectionButtons{
 		display:inline-block;
+		position:absolute;
+		bottom:0;
+		margin:0;
+		padding-top:$navButtonHeight;
 	}
 	.navItem{
-		color:$navButtonColor;
-		text-decoration:none;
-		float:right;
+		display:inline-block;
+		
+		a{
+			padding:$navButtonHeight em(10) 0px em(10);
+			border-right:1px solid $navBorderBottomColor;
+			color:$navButtonColor;
+			text-decoration:none;
+			@include vendorPrefixer(transition, background-color .333s linear);
+
+			&:hover{
+				color:$navButtonHoverColor;
+			}
+		}
+
+		&.current a{
+			color:$navButtonCurrentColor;
+			background-color:$navButtonCurrentBackgroundColor;
+		}
 	}
+
 }

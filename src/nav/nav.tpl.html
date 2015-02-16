@@ -1,4 +1,10 @@
-<nav>
-	<div class="homeBtn">WORKSHOP</div>
-	<a class="navItem" data-nav-button data-ng-click="onClick($event, section)" data-ng-repeat="section in navSections" href=''>{{section.label}}</a>
+<nav class="clearFix">
+	<div class="homeBtn">
+		<a href="/" alt="home"></a>
+	</div>
+	<ul class="sectionButtons">
+		<li class="navItem" data-ng-class="{current:section.url === currentSectionUrl}" data-ng-repeat="section in navSections">
+			<a data-nav-button data-ng-click="onClick($event, section)"  href=''>{{section.label}}</a>
+		</li>
+	</ul>
 </nav>
