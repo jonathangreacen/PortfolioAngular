@@ -10,7 +10,10 @@ html, body{
 
 .js {
 	.gfx{
-		display:block;
+		display:none;
+		@include tabletish{
+			display:block;
+		}
 	}
 	.site{
 		position:relative;

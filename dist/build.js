@@ -1070,9 +1070,10 @@
 					retractYPosition = 120;
 				scope.navSections = Constants.SECTIONS;
 				scope.currentSectionUrl = $location.url();
-				angular.element($window).bind('scroll', onScroll);
+				
 
 				onScroll();
+				angular.element($window).bind('scroll', onScroll);
 				function onScroll(evt){
 					if(expanded === true && $window.pageYOffset > retractYPosition){
 						expanded = false;

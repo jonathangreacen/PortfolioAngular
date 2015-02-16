@@ -1,53 +1,91 @@
 .js nav{
 	position:fixed;
-	height:$collapsedNavHeight;
 	vertical-align:bottom;
-	left:$gfxContentMargin;
-	right:$gfxContentMargin;
+	height:$navMobileHeight;
+	left:0;
+	right:0;
 	z-index:5;
+	background-color:#FFFFFF;
 	background-color:$navBGColor;
 	border-bottom:1px solid $navBorderBottomColor;
 	@include vendorPrefixer(transition, height .5s linear);
 
 	&.expanded{
-		height:$expandedNavHeight;
-	}
-
-	@include tabletish{
-			margin-left:$gfxWidth;
+		.homeBtn{
+			opacity:0;
 		}
-	.homeBtn {	
-		padding:0 0 0 em(10);
+	}
+	.homeBtn{
+		opacity:1;
+		@include vendorPrefixer(transition, opacity .35s linear);
+	}
+	@include tabletish{
+		height:$collapsedNavHeight;
+		left:$gfxContentMargin;
+		right:$gfxContentMargin;
+		margin-left:$gfxWidth;		
+
+		.homeBtn{
+			display:block;
+			padding:0 0 0 em(10);
+			a{				
+				padding:$navButtonHeight em(10) em(0) em(10);
+			}
+		}
+	}
+	.homeBtn {
+		position:relative;
 		a{
 			display:inline-block;
-			width:em(75);
-			padding:$navButtonHeight em(10) 0px em(10);
-
-			background:url(../content/WORKSHOP_small.png) no-repeat left;
+			width:100%;
+			height:em(30);
+			background:url(../content/WORKSHOP_small.png) no-repeat center;
+		}
+		@include tabletish{
+			a{
+				background-position:bottom;
+				height:em(12);
+				width:em(75);
+			}
 		}
 	}
 	.sectionButtons{
+		display:inline-block;
+		left:0;
 		right:0;
 		bottom:0;		
-		padding:0;
+		padding:0;		
 	}
-	.homeBtn, .sectionButtons{
-		display:inline-block;
-		position:absolute;
-		bottom:0;
-		margin:0;
-		padding-top:$navButtonHeight;
+	.homeBtn, .sectionButtons{		
+		margin:0;		
+		position:relative;
+		width:100%;
+		@include tabletish{
+			width:auto;
+			position:absolute;
+			left:auto;
+			padding:0;
+		}
 	}
 	.navItem{
 		display:inline-block;
-		
+		width:50%;
+		@include tabletish{
+			width:auto;
+		}
 		a{
-			padding:$navButtonHeight em(10) 0px em(10);
+			padding:10px em(1) em(4) em(1);
+			width:100%;
+			display:inline-block;
+			text-align:center;
 			border-right:1px solid $navBorderBottomColor;
 			color:$navButtonColor;
-			text-decoration:none;
-			@include vendorPrefixer(transition, background-color .333s linear);
-
+			text-decoration:none;			
+			transition:background-color .333s linear, color .333s linear;
+			@include tabletish{
+				width:auto;
+				padding:$navButtonHeight em(10) em(6) em(10);
+			}
 			&:hover{
 				color:$navButtonHoverColor;
 			}

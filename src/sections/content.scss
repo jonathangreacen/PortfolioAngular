@@ -4,6 +4,10 @@
 	height:inherit;
 
 	article{
+		font-size:20px;
+		@include tabletish{
+			font-size:16px;
+		}
 		margin:0;
 		padding:em(25) em(10) em(35) em(10);
 		@include vendorPrefixer(transition, background-color .75s linear);
@@ -46,6 +50,10 @@
 			a.link, a.link:active{
 				color:$linkBtnBGCol;
 				background-color:$linkBtnFGCol;
+				text-decoration:none;
+				&:hover{
+					text-decoration:underline;
+				}
 				&::selection{
 					background-color:#000000;
 					color:#FFFFFF;

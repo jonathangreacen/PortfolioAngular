@@ -1,7 +1,8 @@
 $gfxWidth:225px;
 $contentWidth:em(650);
 $footerHeight:100px;
-$gfxContentMargin:30px;
-$expandedNavHeight:100px;
-$collapsedNavHeight:65px;
+$gfxContentMargin:35px;
+$expandedNavHeight:em(100);
+$collapsedNavHeight:em(65);
 $navButtonHeight:em(40);
+$navMobileHeight:auto;

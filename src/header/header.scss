@@ -1,5 +1,27 @@
 .js .site header{
-	clear:both;
-	padding-top:$expandedNavHeight;
-	border:1px solid #00f;
+	padding-top:$expandedNavHeight + em(65);
+	padding-bottom:1em;
+	text-align:center;
+
+	img.letterForm{
+		max-width:100%;
+	}
+	p.title{
+		color:#7e7e7e;
+		font-size:em(20);
+		a{
+			color:#333333;
+			padding:0 5px;
+			text-decoration:none;
+			@include vendorPrefixer(transition, background-color .4s linear);
+			&:hover, &:focus{
+				color:#FFFFFF;
+				background-color:#843b84;
+			}
+		}
+	}
+
+	@include tabletish{
+		padding-top:$collapsedNavHeight + em(65);
+	}
 }

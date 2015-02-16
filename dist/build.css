@@ -4,10 +4,13 @@
   bottom: -20px;
   height: 100px;
   left: 0;
-  right: 30px;
+  right: 17.5px;
   text-align: right;
   background-color: #FFFFFF;
   border-top: 1px solid #EDEDED; }
+  @media (min-width: 715px) {
+    .site footer {
+      right: 35px; } }
   .site footer > div {
     padding: 0.625em;
     font-size: 0.75em;
@@ -26,7 +29,7 @@
   width: 0;
   background-color: #F2FEF1;
   position: fixed; }
-  @media (min-width: 520px) {
+  @media (min-width: 715px) {
     .js .gfx {
       display: block;
       width: 225px; } }
@@ -48,58 +51,112 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#14000000',GradientType=1 ); }
 
 .js .site header {
-  clear: both;
-  padding-top: 100px;
-  border: 1px solid #00f; }
+  padding-top: 10.3125em;
+  padding-bottom: 1em;
+  text-align: center; }
+  .js .site header img.letterForm {
+    max-width: 100%; }
+  .js .site header p.title {
+    color: #7e7e7e;
+    font-size: 1.25em; }
+    .js .site header p.title a {
+      color: #333333;
+      padding: 0 5px;
+      text-decoration: none;
+      -webkit-transition: background-color 0.4s linear;
+      -moz-transition: background-color 0.4s linear;
+      -ms-transition: background-color 0.4s linear;
+      -o-transition: background-color 0.4s linear;
+      transition: background-color 0.4s linear; }
+      .js .site header p.title a:hover, .js .site header p.title a:focus {
+        color: #FFFFFF;
+        background-color: #843b84; }
+  @media (min-width: 715px) {
+    .js .site header {
+      padding-top: 8.125em; } }
 
 .js nav {
   position: fixed;
-  height: 65px;
   vertical-align: bottom;
-  left: 30px;
-  right: 30px;
+  height: auto;
+  left: 0;
+  right: 0;
   z-index: 5;
   background-color: #FFFFFF;
+  background-color: rgba(255, 255, 255, 0.9);
   border-bottom: 1px solid #EDEDED;
   -webkit-transition: height 0.5s linear;
   -moz-transition: height 0.5s linear;
   -ms-transition: height 0.5s linear;
   -o-transition: height 0.5s linear;
   transition: height 0.5s linear; }
-  .js nav.expanded {
-    height: 100px; }
-  @media (min-width: 520px) {
-    .js nav {
-      margin-left: 225px; } }
+  .js nav.expanded .homeBtn {
+    opacity: 0; }
   .js nav .homeBtn {
-    padding: 0 0 0 0.625em; }
+    opacity: 1;
+    -webkit-transition: opacity 0.35s linear;
+    -moz-transition: opacity 0.35s linear;
+    -ms-transition: opacity 0.35s linear;
+    -o-transition: opacity 0.35s linear;
+    transition: opacity 0.35s linear; }
+  @media (min-width: 715px) {
+    .js nav {
+      height: 4.0625em;
+      left: 35px;
+      right: 35px;
+      margin-left: 225px; }
+      .js nav .homeBtn {
+        display: block;
+        padding: 0 0 0 0.625em; }
+        .js nav .homeBtn a {
+          padding: 2.5em 0.625em 0em 0.625em; } }
+  .js nav .homeBtn {
+    position: relative; }
     .js nav .homeBtn a {
       display: inline-block;
-      width: 4.6875em;
-      padding: 2.5em 0.625em 0px 0.625em;
-      background: url(../content/WORKSHOP_small.png) no-repeat left; }
+      width: 100%;
+      height: 1.875em;
+      background: url(../content/WORKSHOP_small.png) no-repeat center; }
+    @media (min-width: 715px) {
+      .js nav .homeBtn a {
+        background-position: bottom;
+        height: 0.75em;
+        width: 4.6875em; } }
   .js nav .sectionButtons {
+    display: inline-block;
+    left: 0;
     right: 0;
     bottom: 0;
     padding: 0; }
   .js nav .homeBtn, .js nav .sectionButtons {
-    display: inline-block;
-    position: absolute;
-    bottom: 0;
     margin: 0;
-    padding-top: 2.5em; }
+    position: relative;
+    width: 100%; }
+    @media (min-width: 715px) {
+      .js nav .homeBtn, .js nav .sectionButtons {
+        width: auto;
+        position: absolute;
+        left: auto;
+        padding: 0; } }
   .js nav .navItem {
-    display: inline-block; }
+    display: inline-block;
+    width: 50%; }
+    @media (min-width: 715px) {
+      .js nav .navItem {
+        width: auto; } }
     .js nav .navItem a {
-      padding: 2.5em 0.625em 0px 0.625em;
+      padding: 10px 0.0625em 0.25em 0.0625em;
+      width: 100%;
+      display: inline-block;
+      text-align: center;
       border-right: 1px solid #EDEDED;
       color: #333333;
       text-decoration: none;
-      -webkit-transition: background-color 0.333s linear;
-      -moz-transition: background-color 0.333s linear;
-      -ms-transition: background-color 0.333s linear;
-      -o-transition: background-color 0.333s linear;
-      transition: background-color 0.333s linear; }
+      transition: background-color .333s linear, color .333s linear; }
+      @media (min-width: 715px) {
+        .js nav .navItem a {
+          width: auto;
+          padding: 2.5em 0.625em 0.375em 0.625em; } }
       .js nav .navItem a:hover {
         color: #FF5948; }
     .js nav .navItem.current a {
@@ -110,7 +167,7 @@
   display: none; }
 
 .noJS {
-  margin: 0 30px; }
+  margin: 0 35px; }
 
 .js .site .content .about article h1 {
   color: #09f; }
@@ -133,6 +190,7 @@
   margin: 0;
   height: inherit; }
   .js .site .content article {
+    font-size: 20px;
     margin: 0;
     padding: 1.5625em 0.625em 2.1875em 0.625em;
     -webkit-transition: background-color 0.75s linear;
@@ -140,6 +198,9 @@
     -ms-transition: background-color 0.75s linear;
     -o-transition: background-color 0.75s linear;
     transition: background-color 0.75s linear; }
+    @media (min-width: 715px) {
+      .js .site .content article {
+        font-size: 16px; } }
     .js .site .content article.active {
       background-color: #FFFFFF;
       border-top: 1px solid #EDEDED;
@@ -165,7 +226,10 @@
         background: #FFFFCC; }
     .js .site .content article .description a.link, .js .site .content article .description a.link:active {
       color: #FF5948;
-      background-color: #FFFFFF; }
+      background-color: #FFFFFF;
+      text-decoration: none; }
+      .js .site .content article .description a.link:hover, .js .site .content article .description a.link:active:hover {
+        text-decoration: underline; }
       .js .site .content article .description a.link::selection, .js .site .content article .description a.link:active::selection {
         background-color: #000000;
         color: #FFFFFF; }
@@ -232,18 +296,21 @@ html, body {
   font-size: 1em; }
 
 .js .gfx {
-  display: block; }
+  display: none; }
+  @media (min-width: 715px) {
+    .js .gfx {
+      display: block; } }
 .js .site {
   position: relative;
   min-height: 100%;
   padding: 0;
   margin: 0;
-  margin-left: 15px;
-  padding-right: 15px; }
-  @media (min-width: 520px) {
+  margin-left: 17.5px;
+  padding-right: 17.5px; }
+  @media (min-width: 715px) {
     .js .site {
-      margin-left: 255px;
-      padding-right: 30px; } }
+      margin-left: 260px;
+      padding-right: 35px; } }
   .js .site .content {
     display: block;
     padding-bottom: 120px; }

@@ -1,13 +1,15 @@
 .site footer{
 	position:absolute;
-	bottom:-20px;//0;
+	bottom:-20px;
 	height:$footerHeight;
 	left:0;
-	right:$gfxContentMargin;
+	right:$gfxContentMargin/2;
 	text-align:right;
 	background-color:$footerBGCol;
 	border-top:1px solid $footerDividerCol;
-
+	@include tabletish{
+		right:$gfxContentMargin;
+	}
 	> div{
 		padding:em(10);
 		font-size:em(12);

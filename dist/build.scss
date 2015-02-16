@@ -1,7 +1,7 @@
 $bgColor:#F7F7F7;
 $gfxBGCol:#F2FEF1;
 
-$navBGColor:#FFFFFF;
+$navBGColor:rgba(255,255,255, .9);
 $navButtonColor:#333333;
 $navButtonHoverColor:#FF5948;
 $navButtonCurrentColor:#FFFFFF;
@@ -31,7 +31,7 @@ $footerTxtCol:#CACACA;
 @function em($pxval, $base:16){
 	@return ($pxval / $base) * 1em;
 }
-$tabletish-width: 520px;
+$tabletish-width: 715px;
 $desktopish-width: 800px;
 $lobbyDisplayish-width:1560px;
 
@@ -67,10 +67,11 @@ $lobbyDisplayish-width:1560px;
 $gfxWidth:225px;
 $contentWidth:em(650);
 $footerHeight:100px;
-$gfxContentMargin:30px;
-$expandedNavHeight:100px;
-$collapsedNavHeight:65px;
+$gfxContentMargin:35px;
+$expandedNavHeight:em(100);
+$collapsedNavHeight:em(65);
 $navButtonHeight:em(40);
+$navMobileHeight:auto;
 @mixin vendorPrefixer ($prop, $value, $prefixes:(webkit, moz, ms, o, spec)) {
 		@each $prefix in $prefixes{
 			@if $prefix == webkit{
@@ -95,14 +96,16 @@ $navButtonHeight:em(40);
 }
 .site footer{
 	position:absolute;
-	bottom:-20px;//0;
+	bottom:-20px;
 	height:$footerHeight;
 	left:0;
-	right:$gfxContentMargin;
+	right:$gfxContentMargin/2;
 	text-align:right;
 	background-color:$footerBGCol;
 	border-top:1px solid $footerDividerCol;
-
+	@include tabletish{
+		right:$gfxContentMargin;
+	}
 	> div{
 		padding:em(10);
 		font-size:em(12);
@@ -155,60 +158,120 @@ $navButtonHeight:em(40);
 	}
 }
 .js .site header{
-	clear:both;
-	padding-top:$expandedNavHeight;
-	border:1px solid #00f;
+	padding-top:$expandedNavHeight + em(65);
+	padding-bottom:1em;
+	text-align:center;
+
+	img.letterForm{
+		max-width:100%;
+	}
+	p.title{
+		color:#7e7e7e;
+		font-size:em(20);
+		a{
+			color:#333333;
+			padding:0 5px;
+			text-decoration:none;
+			@include vendorPrefixer(transition, background-color .4s linear);
+			&:hover, &:focus{
+				color:#FFFFFF;
+				background-color:#843b84;
+			}
+		}
+	}
+
+	@include tabletish{
+		padding-top:$collapsedNavHeight + em(65);
+	}
 }
 .js nav{
 	position:fixed;
-	height:$collapsedNavHeight;
 	vertical-align:bottom;
-	left:$gfxContentMargin;
-	right:$gfxContentMargin;
+	height:$navMobileHeight;
+	left:0;
+	right:0;
 	z-index:5;
+	background-color:#FFFFFF;
 	background-color:$navBGColor;
 	border-bottom:1px solid $navBorderBottomColor;
 	@include vendorPrefixer(transition, height .5s linear);
 
 	&.expanded{
-		height:$expandedNavHeight;
-	}
-
-	@include tabletish{
-			margin-left:$gfxWidth;
+		.homeBtn{
+			opacity:0;
 		}
-	.homeBtn {	
-		padding:0 0 0 em(10);
+	}
+	.homeBtn{
+		opacity:1;
+		@include vendorPrefixer(transition, opacity .35s linear);
+	}
+	@include tabletish{
+		height:$collapsedNavHeight;
+		left:$gfxContentMargin;
+		right:$gfxContentMargin;
+		margin-left:$gfxWidth;		
+
+		.homeBtn{
+			display:block;
+			padding:0 0 0 em(10);
+			a{				
+				padding:$navButtonHeight em(10) em(0) em(10);
+			}
+		}
+	}
+	.homeBtn {
+		position:relative;
 		a{
 			display:inline-block;
-			width:em(75);
-			padding:$navButtonHeight em(10) 0px em(10);
-
-			background:url(../content/WORKSHOP_small.png) no-repeat left;
+			width:100%;
+			height:em(30);
+			background:url(../content/WORKSHOP_small.png) no-repeat center;
+		}
+		@include tabletish{
+			a{
+				background-position:bottom;
+				height:em(12);
+				width:em(75);
+			}
 		}
 	}
 	.sectionButtons{
+		display:inline-block;
+		left:0;
 		right:0;
 		bottom:0;		
-		padding:0;
+		padding:0;		
 	}
-	.homeBtn, .sectionButtons{
-		display:inline-block;
-		position:absolute;
-		bottom:0;
-		margin:0;
-		padding-top:$navButtonHeight;
+	.homeBtn, .sectionButtons{		
+		margin:0;		
+		position:relative;
+		width:100%;
+		@include tabletish{
+			width:auto;
+			position:absolute;
+			left:auto;
+			padding:0;
+		}
 	}
 	.navItem{
 		display:inline-block;
-		
+		width:50%;
+		@include tabletish{
+			width:auto;
+		}
 		a{
-			padding:$navButtonHeight em(10) 0px em(10);
+			padding:10px em(1) em(4) em(1);
+			width:100%;
+			display:inline-block;
+			text-align:center;
 			border-right:1px solid $navBorderBottomColor;
 			color:$navButtonColor;
-			text-decoration:none;
-			@include vendorPrefixer(transition, background-color .333s linear);
-
+			text-decoration:none;			
+			transition:background-color .333s linear, color .333s linear;
+			@include tabletish{
+				width:auto;
+				padding:$navButtonHeight em(10) em(6) em(10);
+			}
 			&:hover{
 				color:$navButtonHoverColor;
 			}
@@ -256,6 +319,10 @@ $navButtonHeight:em(40);
 	height:inherit;
 
 	article{
+		font-size:20px;
+		@include tabletish{
+			font-size:16px;
+		}
 		margin:0;
 		padding:em(25) em(10) em(35) em(10);
 		@include vendorPrefixer(transition, background-color .75s linear);
@@ -298,6 +365,10 @@ $navButtonHeight:em(40);
 			a.link, a.link:active{
 				color:$linkBtnBGCol;
 				background-color:$linkBtnFGCol;
+				text-decoration:none;
+				&:hover{
+					text-decoration:underline;
+				}
 				&::selection{
 					background-color:#000000;
 					color:#FFFFFF;
@@ -388,7 +459,10 @@ html, body{
 
 .js {
 	.gfx{
-		display:block;
+		display:none;
+		@include tabletish{
+			display:block;
+		}
 	}
 	.site{
 		position:relative;
