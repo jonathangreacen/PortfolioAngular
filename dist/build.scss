@@ -1,7 +1,7 @@
 $bgColor:#F7F7F7;
 $gfxBGCol:#F2FEF1;
 
-$navBGColor:rgba(255,255,255, .9);
+$navBGColor:rgba(255,255,255, .95);
 $navButtonColor:#333333;
 $navButtonHoverColor:#FF5948;
 $navButtonCurrentColor:#FFFFFF;
@@ -178,6 +178,10 @@ $navMobileHeight:auto;
 				background-color:#843b84;
 			}
 		}
+		span{
+			display:inline-block;
+			word-wrap: nowrap;
+		}
 	}
 
 	@include tabletish{
@@ -193,17 +197,21 @@ $navMobileHeight:auto;
 	z-index:5;
 	background-color:#FFFFFF;
 	background-color:$navBGColor;
-	border-bottom:1px solid $navBorderBottomColor;
+	border-bottom:2px solid $navBorderBottomColor;
 	@include vendorPrefixer(transition, height .5s linear);
 
-	&.expanded{
+	&.collapsed{
 		.homeBtn{
-			opacity:0;
+			opacity:1;
+			height:em(32);
+			@include vendorPrefixer(transition, opacity .35s linear);
 		}
 	}
 	.homeBtn{
-		opacity:1;
-		@include vendorPrefixer(transition, opacity .35s linear);
+		opacity:0;
+		height:0;
+		@include vendorPrefixer (transition, height .25s linear);//
+		//@include vendorPrefixer(transition, opacity .35s linear);
 	}
 	@include tabletish{
 		height:$collapsedNavHeight;
@@ -225,7 +233,8 @@ $navMobileHeight:auto;
 			display:inline-block;
 			width:100%;
 			height:em(30);
-			background:url(../content/WORKSHOP_small.png) no-repeat center;
+			background:url(../content/WORKSHOP_large.png) no-repeat center;
+			background-size:em(78);
 		}
 		@include tabletish{
 			a{
@@ -289,6 +298,16 @@ $navMobileHeight:auto;
 }
 .noJS{
 	margin:0 $gfxContentMargin;
+
+	div{
+		background-position:0 0;
+		background-color:#FFFFFF;
+		background-repeat:no-repeat;
+		max-width:100%;
+	}
+	.vanguard01{
+		background-image:url(../content/projects/vanguard/psr/vanguard_psr_03.jpg);
+	}
 }
 .js .site .content .about{
 	article{
@@ -310,6 +329,46 @@ $navMobileHeight:auto;
 			@include lobbyDisplayish{
 				@include vendorPrefixer(column-count, 1, webkit moz spec);
 			}
+		}
+	}
+}
+.js .site .contact{
+	input, textarea{
+		font-family:Arial,Helvetica,sans-serif;
+		font-size:16px;
+		color:#AAAAAA;
+		display:block;
+		margin:1em .5em;
+		padding:.5em;
+		border:1px solid #B7E9F6;
+		background-color:#FFFFFF;
+		
+		@include vendorPrefixer(border-radius, 3px);
+		&:active, &:focus{
+			color:#339;
+		}
+	}
+	.formTitle, .formEmail{
+		maxlength:50;
+		tabIndex:0;
+	}
+	.formBody{
+		tabIndex:0;
+		maxlenght:2000;
+		width:85%;
+		height:em(300);
+		@include tabletish{
+			width:550px;
+		}
+	}
+	.formSubmit{
+		font-weight:700;
+		cursor:pointer;
+		color:#FFFFFF;
+		background-color:#FF5948;
+		border-color:#FFFFFF;
+		&:active{
+			color:#333333;
 		}
 	}
 }
@@ -363,6 +422,7 @@ $navMobileHeight:auto;
 			}
 
 			a.link, a.link:active{
+				word-wrap:break-word;
 				color:$linkBtnBGCol;
 				background-color:$linkBtnFGCol;
 				text-decoration:none;

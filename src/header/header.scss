@@ -19,6 +19,10 @@
 				background-color:#843b84;
 			}
 		}
+		span{
+			display:inline-block;
+			word-wrap: nowrap;
+		}
 	}
 
 	@include tabletish{

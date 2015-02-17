@@ -1,0 +1,40 @@
+.js .site .contact{
+	input, textarea{
+		font-family:Arial,Helvetica,sans-serif;
+		font-size:16px;
+		color:#AAAAAA;
+		display:block;
+		margin:1em .5em;
+		padding:.5em;
+		border:1px solid #B7E9F6;
+		background-color:#FFFFFF;
+		
+		@include vendorPrefixer(border-radius, 3px);
+		&:active, &:focus{
+			color:#339;
+		}
+	}
+	.formTitle, .formEmail{
+		maxlength:50;
+		tabIndex:0;
+	}
+	.formBody{
+		tabIndex:0;
+		maxlenght:2000;
+		width:85%;
+		height:em(300);
+		@include tabletish{
+			width:550px;
+		}
+	}
+	.formSubmit{
+		font-weight:700;
+		cursor:pointer;
+		color:#FFFFFF;
+		background-color:#FF5948;
+		border-color:#FFFFFF;
+		&:active{
+			color:#333333;
+		}
+	}
+}

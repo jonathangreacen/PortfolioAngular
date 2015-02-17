@@ -3,4 +3,14 @@
 }
 .noJS{
 	margin:0 $gfxContentMargin;
+
+	div{
+		background-position:0 0;
+		background-color:#FFFFFF;
+		background-repeat:no-repeat;
+		max-width:100%;
+	}
+	.vanguard01{
+		background-image:url(../content/projects/vanguard/psr/vanguard_psr_03.jpg);
+	}
 }

@@ -1055,32 +1055,35 @@
 	function Navigation($window, $location, Constants){
 		return {
 			restrict:'A',
-			scope:{},
+			scope:true,
 			templateUrl:'../src/nav/nav.tpl.html',
 			replace:true,
 			controller:function($scope){
-				this.navigateTo = function(sectionData){
+				$scope.navigateTo = function(sectionData){
 					var url = sectionData.url;
 					$scope.currentSectionUrl = url;
 					$location.path( url );
+					if($window.ga){
+						$window.ga('send', 'pageview', { page: $location.url() });
+					}
 				}
 			},
 			link:function(scope, $element, attributes){
 				var expanded = false,
-					retractYPosition = 120;
+					retractYPosition = 120,
+					url = $location.url();
 				scope.navSections = Constants.SECTIONS;
-				scope.currentSectionUrl = $location.url();
-				
+				scope.currentSectionUrl =  url === '/' ? '/work' : url;				
 
 				onScroll();
 				angular.element($window).bind('scroll', onScroll);
 				function onScroll(evt){
 					if(expanded === true && $window.pageYOffset > retractYPosition){
 						expanded = false;
-						$element.removeClass('expanded');
+						$element.addClass('collapsed');
 					}else if(expanded === false && $window.pageYOffset < retractYPosition){
 						expanded = true;
-						$element.addClass('expanded');
+						$element.removeClass('collapsed');
 					}
 				}
 			}
@@ -1094,7 +1097,7 @@
 			require:'^navigation',
 			link:function(scope, element, attributes, controller){				
 				scope.onClick = function(evt, sectionData){
-					controller.navigateTo(sectionData);
+					scope.navigateTo(sectionData);
 				}
 			}
 		}
@@ -1120,7 +1123,7 @@
 		.when('/', {
 			templateUrl:'src/sections/work/projects.tpl.html'
 		})
-		.otherwise({redirectTo:'/'}); 
+		.otherwise({redirectTo:'/work'}); 
 	};
 
 }(angular));;(function(angular){
@@ -1128,9 +1131,9 @@
 	var module = angular.module('workshop.portfolio'),
 		VIEW_NAME = 'about';
 		
-		module.directive(VIEW_NAME, ['AppContent', 'Constants', 'GFXContentManager', About]);
+		module.directive(VIEW_NAME, ['$window', 'AppContent', 'Constants', 'GFXContentManager', About]);
 
-		function About(AppContent, Constants, GFXContentManager){
+		function About($window, AppContent, Constants, GFXContentManager){
 			return {
 				restrict:'A',
 				scope:true,
@@ -1143,7 +1146,7 @@
 					}
 				},
 				link:function(scope, element, attrs){
-
+					$window.scrollTo(0,0);
 				}
 			}
 		};
@@ -1152,9 +1155,9 @@
 	var module = angular.module('workshop.portfolio'),
 		VIEW_NAME = 'code';
 		
-		module.directive(VIEW_NAME, ['AppContent', 'Constants', 'GFXContentManager', Code]);
+		module.directive(VIEW_NAME, ['$window', 'AppContent', 'Constants', 'GFXContentManager', Code]);
 
-		function Code(AppContent, Constants, GFXContentManager){
+		function Code($window, AppContent, Constants, GFXContentManager){
 			return {
 				restrict:'A',
 				scope:true,
@@ -1167,7 +1170,7 @@
 					}
 				},
 				link:function(scope, element, attrs){
-
+					$window.scrollTo(0,0);
 				}
 			}
 		};
@@ -1176,9 +1179,9 @@
 	var module = angular.module('workshop.portfolio'),
 		VIEW_NAME = 'contact';
 		
-		module.directive(VIEW_NAME, ['AppContent', 'Constants', 'GFXContentManager', Contact]);
+		module.directive(VIEW_NAME, ['$window', 'AppContent', 'Constants', 'GFXContentManager', Contact]);
 
-		function Contact(AppContent, Constants, GFXContentManager){
+		function Contact($window, AppContent, Constants, GFXContentManager){
 			return {
 				restrict:'A',
 				scope:true,
@@ -1191,7 +1194,7 @@
 					}
 				},
 				link:function(scope, element, attrs){
-
+					$window.scrollTo(0,0);
 				}
 			}
 		};
@@ -1320,6 +1323,7 @@
 				link:function(scope, $element){
 					scope.state = {};
 					scope.state.currentFocusedProject;
+					$window.scrollTo(0,0);
 					angular.element($window).on('scroll', highlightCurrentProject);
 
 					highlightCurrentProject();

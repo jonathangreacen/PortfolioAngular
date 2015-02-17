@@ -48,6 +48,7 @@
 			}
 
 			a.link, a.link:active{
+				word-wrap:break-word;
 				color:$linkBtnBGCol;
 				background-color:$linkBtnFGCol;
 				text-decoration:none;

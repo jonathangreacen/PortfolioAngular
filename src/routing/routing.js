@@ -18,7 +18,7 @@
 		.when('/', {
 			templateUrl:'src/sections/work/projects.tpl.html'
 		})
-		.otherwise({redirectTo:'/'}); 
+		.otherwise({redirectTo:'/work'}); 
 	};
 
 }(angular));

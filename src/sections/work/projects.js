@@ -27,6 +27,7 @@
 				link:function(scope, $element){
 					scope.state = {};
 					scope.state.currentFocusedProject;
+					$window.scrollTo(0,0);
 					angular.element($window).on('scroll', highlightCurrentProject);
 
 					highlightCurrentProject();

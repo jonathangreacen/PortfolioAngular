@@ -3,9 +3,9 @@
 	var module = angular.module('workshop.portfolio'),
 		VIEW_NAME = 'about';
 		
-		module.directive(VIEW_NAME, ['AppContent', 'Constants', 'GFXContentManager', About]);
+		module.directive(VIEW_NAME, ['$window', 'AppContent', 'Constants', 'GFXContentManager', About]);
 
-		function About(AppContent, Constants, GFXContentManager){
+		function About($window, AppContent, Constants, GFXContentManager){
 			return {
 				restrict:'A',
 				scope:true,
@@ -18,7 +18,7 @@
 					}
 				},
 				link:function(scope, element, attrs){
-
+					$window.scrollTo(0,0);
 				}
 			}
 		};

@@ -71,6 +71,9 @@
       .js .site header p.title a:hover, .js .site header p.title a:focus {
         color: #FFFFFF;
         background-color: #843b84; }
+    .js .site header p.title span {
+      display: inline-block;
+      word-wrap: nowrap; }
   @media (min-width: 715px) {
     .js .site header {
       padding-top: 8.125em; } }
@@ -83,22 +86,29 @@
   right: 0;
   z-index: 5;
   background-color: #FFFFFF;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-bottom: 1px solid #EDEDED;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-bottom: 2px solid #EDEDED;
   -webkit-transition: height 0.5s linear;
   -moz-transition: height 0.5s linear;
   -ms-transition: height 0.5s linear;
   -o-transition: height 0.5s linear;
   transition: height 0.5s linear; }
-  .js nav.expanded .homeBtn {
-    opacity: 0; }
-  .js nav .homeBtn {
+  .js nav.collapsed .homeBtn {
     opacity: 1;
+    height: 2em;
     -webkit-transition: opacity 0.35s linear;
     -moz-transition: opacity 0.35s linear;
     -ms-transition: opacity 0.35s linear;
     -o-transition: opacity 0.35s linear;
     transition: opacity 0.35s linear; }
+  .js nav .homeBtn {
+    opacity: 0;
+    height: 0;
+    -webkit-transition: height 0.25s linear;
+    -moz-transition: height 0.25s linear;
+    -ms-transition: height 0.25s linear;
+    -o-transition: height 0.25s linear;
+    transition: height 0.25s linear; }
   @media (min-width: 715px) {
     .js nav {
       height: 4.0625em;
@@ -116,7 +126,8 @@
       display: inline-block;
       width: 100%;
       height: 1.875em;
-      background: url(../content/WORKSHOP_small.png) no-repeat center; }
+      background: url(../content/WORKSHOP_large.png) no-repeat center;
+      background-size: 4.875em; }
     @media (min-width: 715px) {
       .js nav .homeBtn a {
         background-position: bottom;
@@ -168,6 +179,13 @@
 
 .noJS {
   margin: 0 35px; }
+  .noJS div {
+    background-position: 0 0;
+    background-color: #FFFFFF;
+    background-repeat: no-repeat;
+    max-width: 100%; }
+  .noJS .vanguard01 {
+    background-image: url(../content/projects/vanguard/psr/vanguard_psr_03.jpg); }
 
 .js .site .content .about article h1 {
   color: #09f; }
@@ -184,6 +202,42 @@
     -webkit-column-count: 1;
     -moz-column-count: 1;
     column-count: 1; } }
+
+.js .site .contact input, .js .site .contact textarea {
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: 16px;
+  color: #AAAAAA;
+  display: block;
+  margin: 1em .5em;
+  padding: .5em;
+  border: 1px solid #B7E9F6;
+  background-color: #FFFFFF;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px; }
+  .js .site .contact input:active, .js .site .contact input:focus, .js .site .contact textarea:active, .js .site .contact textarea:focus {
+    color: #339; }
+.js .site .contact .formTitle, .js .site .contact .formEmail {
+  maxlength: 50;
+  tabIndex: 0; }
+.js .site .contact .formBody {
+  tabIndex: 0;
+  maxlenght: 2000;
+  width: 85%;
+  height: 18.75em; }
+  @media (min-width: 715px) {
+    .js .site .contact .formBody {
+      width: 550px; } }
+.js .site .contact .formSubmit {
+  font-weight: 700;
+  cursor: pointer;
+  color: #FFFFFF;
+  background-color: #FF5948;
+  border-color: #FFFFFF; }
+  .js .site .contact .formSubmit:active {
+    color: #333333; }
 
 .js .site .content {
   width: 100%;
@@ -225,6 +279,7 @@
       .js .site .content article .description p::selection, .js .site .content article .description p i::selection {
         background: #FFFFCC; }
     .js .site .content article .description a.link, .js .site .content article .description a.link:active {
+      word-wrap: break-word;
       color: #FF5948;
       background-color: #FFFFFF;
       text-decoration: none; }
