@@ -44,11 +44,14 @@
 					runVis = mediaQueryList.matches;
 				}				
 				function init(){
+					var matchingLargeFormat;
 					resize();
 					
 					//For performance when in small/mobile format
-					var matchingLargeFormat = window.matchMedia("(min-width : 520px)");
+					if(typeof $window['matchMedia'] !== 'undefined'){
+						matchingLargeFormat = $window.matchMedia("(min-width : 520px)");
 						matchingLargeFormat.addListener(toggleVisRunningByMQ);
+					}
 				}
 				angular.element($window).on('resize', resize.bind(this));
 				angular.element(canvas).on('click touchstart', interact.bind(this));				

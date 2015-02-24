@@ -1,12 +1,14 @@
-<section data-contact class="contact" role="">
-	<article data-ng-repeat="content in contactData.items">
-		<h1><span data-ng-style="{color:content.color}">{{content.title}}</span></h1>
-		<div class="description" data-ng-bind-html="content.description"></div>
-		<form>
-			<input disabled type="text" name="title" placeholder="Hi there!" class='formTitle'/>
-			<textarea disabled type="text" name="body" placeholder="I saw your site and..." class="formBody"/></textarea>
-			<input disabled type="text" name="email" placeholder="Your email" class="formEmail"/>
-			<input disabled type="submit" value="Send" class="formSubmit"/>
-		</form>
-	</article>
-</section>
+<script type="text/ng-template" id="contact.tpl.html">
+	<section data-contact class="contact" role="">
+		<article data-ng-repeat="content in contactData.items">
+			<h1><span data-ng-style="{color:content.color}">{{content.title}}</span></h1>
+			<div class="description" data-ng-bind-html="content.description"></div>
+			<form>
+				<input disabled type="text" name="title" placeholder="Hi there!" class='formTitle'/>
+				<textarea disabled type="text" name="body" placeholder="I saw your site and..." class="formBody"/></textarea>
+				<input disabled type="text" name="email" placeholder="Your email" class="formEmail"/>
+				<input disabled type="submit" value="Send" class="formSubmit"/>
+			</form>
+		</article>
+	</section>
+</script>

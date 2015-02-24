@@ -9,24 +9,26 @@
 		return {
 			restrict:'A',
 			scope:true,
-			templateUrl:'../src/nav/nav.tpl.html',
+			templateUrl:'nav.tpl.html',
 			replace:true,
 			controller:function($scope){
 				$scope.navigateTo = function(sectionData){
 					var url = sectionData.url;
-					$scope.currentSectionUrl = url;
 					$location.path( url );
 					if($window.ga){
 						$window.ga('send', 'pageview', { page: $location.url() });
 					}
 				}
+				$scope.$on('$routeChangeSuccess', function () {
+					$scope.currentSectionUrl = $location.path();
+		        });
 			},
 			link:function(scope, $element, attributes){
 				var expanded = false,
 					retractYPosition = 120,
 					url = $location.url();
 				scope.navSections = Constants.SECTIONS;
-				scope.currentSectionUrl =  url === '/' ? '/work' : url;				
+				scope.currentSectionUrl =  url === '/' ? '/work' : url;
 
 				onScroll();
 				angular.element($window).bind('scroll', onScroll);

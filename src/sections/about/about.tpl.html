@@ -1,6 +1,8 @@
-<section data-about class="about" role="">
-	<article data-ng-repeat="content in aboutData.items">
-		<h1>{{content.title}}</h1>
-		<div class="description" data-ng-bind-html="content.description"></div>		
-	</article>
-</section>
+<script type="text/ng-template" id="about.tpl.html">
+	<section data-about class="about" role="">
+		<article data-ng-repeat="content in aboutData.items">
+			<h1>{{content.title}}</h1>
+			<div class="description" data-ng-bind-html="content.description"></div>		
+		</article>
+	</section>
+</script>

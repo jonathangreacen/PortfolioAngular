@@ -7,6 +7,12 @@ html, body{
 	font-family:"Sorts Mill Goudy",Georgia,serif;
 	font-size:1em;
 }
+.site{
+	position:relative;
+	min-height:100%;
+	padding:0;
+	margin:0;	
+}
 
 .js {
 	.gfx{
@@ -16,13 +22,8 @@ html, body{
 		}
 	}
 	.site{
-		position:relative;
-		min-height:100%;
-		padding:0;
-		margin:0;
 		margin-left:$gfxContentMargin/2;
 		padding-right:$gfxContentMargin/2;
-
 		@include tabletish{
 			margin-left:$gfxWidth + $gfxContentMargin;
 			padding-right:$gfxContentMargin;
@@ -36,8 +37,8 @@ html, body{
 		}
 	}
 }
-.clearFix:after {
+/* .clearFix:after {
 	content: "";
 	display: table;
 	clear: both;
-}
+} */

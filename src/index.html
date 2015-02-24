@@ -60,69 +60,7 @@
 			</footer>
 		</div>
 
-		<script type="text/ng-template" id="header.tpl.html">
-			<img src="../content/WORKSHOP_large.png" class="letterForm" alt="WORKSHOP" title="Workshop Development LLC"/>
-			<p class="title"><span>portfolio of interface development</span> <span>by <a href="#about">jonathan greacen</a></span></p>
-		</script>
-		<script type="text/ng-template" id="nav.tpl.html">
-			<nav>
-				<div class="homeBtn">
-					<a href="/#work" alt="home"></a>
-				</div>
-				<ul class="sectionButtons">
-					<li class="navItem" data-ng-class="{current:section.url === currentSectionUrl}" data-ng-repeat="section in navSections">
-						<a data-nav-button data-ng-click="onClick($event, section)"  href=''>{{section.label}}</a>
-					</li>
-				</ul>
-			</nav>
-		</script>
-		<script type="text/ng-template" id="about.tpl.html">
-			<section data-about class="about" role="">
-				<article data-ng-repeat="content in aboutData.items">
-					<h1>{{content.title}}</h1>
-					<div class="description" data-ng-bind-html="content.description"></div>		
-				</article>
-			</section>
-		</script>
-		<script type="text/ng-template" id="code.tpl.html">
-			<section data-code class="code" role="">
-				<article data-ng-repeat="content in codeData.items">
-					<h1>{{content.title}}</h1>
-					<div class="description" data-ng-bind-html="content.description"></div>		
-				</article>
-			</section>
-		</script>
-		<script type="text/ng-template" id="contact.tpl.html">
-			<section data-contact class="contact" role="">
-				<article data-ng-repeat="content in contactData.items">
-					<h1><span data-ng-style="{color:content.color}">{{content.title}}</span></h1>
-					<div class="description" data-ng-bind-html="content.description"></div>
-					<form>
-						<input disabled type="text" name="title" placeholder="Hi there!" class='formTitle'/>
-						<textarea disabled type="text" name="body" placeholder="I saw your site and..." class="formBody"/></textarea>
-						<input disabled type="text" name="email" placeholder="Your email" class="formEmail"/>
-						<input disabled type="submit" value="Send" class="formSubmit"/>
-					</form>
-				</article>
-			</section>
-		</script>
-		<script type="text/ng-template" id="project.tpl.html">
-			<article data-ng-class="{selected : state.currentFocusedProject.data === project}">
-				<div class="imagePreview" data-image-preview data-images="{{project.images}}"></div>
-				<h1><span data-ng-style="{color:project.color}">{{project.title}}</span> {{project.summary}}</h1>
-				<div class="description" data-ng-bind-html="project.description"></div>
-				<ul class="info">
-					<li class="couplet" data-ng-repeat="info in project.info">
-						<strong>{{info.type}}</strong> {{info.value}}
-					</li>
-				</ul>
-			</article>
-		</script>
-		<script type="text/ng-template" id="projects.tpl.html">
-			<section data-projects class="projects" role="">
-				<div data-ng-repeat="project in projectsData.items" data-project></div>
-			</section>
-		</script>
+		include "templates.tpl.html"
 
 		<script>
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

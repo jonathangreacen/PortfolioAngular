@@ -1,16 +1,91 @@
-.gfx, .content{
+.gfx, .content, nav{
 	display:none;
 }
-.noJS{
-	margin:0 $gfxContentMargin;
 
-	div{
-		background-position:0 0;
-		background-color:#FFFFFF;
-		background-repeat:no-repeat;
+.noJS{	
+	margin:0 $gfxContentMargin;
+	padding-bottom:$footerHeight+20;
+	header img{
 		max-width:100%;
 	}
+	div{
+
+		background-position:center;
+		background-color:#FFFFFF;
+		background-repeat:no-repeat;
+		background-size:contain;
+		max-width:100%;
+		margin:0;
+		@include tabletish{
+			margin:20px;
+		}
+
+		p{
+			font-size:18px;
+		}
+	}
 	.vanguard01{
+		background-image:url(../content/projects/vanguard/psr/vanguard_psr_01.jpg);
+		height:462px;
+	}
+	.vanguard02{
 		background-image:url(../content/projects/vanguard/psr/vanguard_psr_03.jpg);
+		height:462px;
+	}
+	.newstrends01{
+		background-image:url(../content/projects/dg/NewsTrends01.jpg);
+		height:465px;
+	}
+	.dg01{
+		background-image:url(../content/projects/dg/DachisGroup_IndexAreaGraph.png);
+		height:218px;
+	}
+	.dg02{
+		background-image:url(../content/projects/dg/DachisGroup_SBG.png);
+		height:218px;
+	}
+	.dltxii02{
+		background-image:url(../content/projects/dltxii/DLTXII_GALLERY_MOBILE_02.jpg);
+		height:552px;
+	}
+	.signalpatterns01{
+		background-image:url(../content/projects/sp/SP_PERSONALITY_02.jpg);
+		height:390px;
+	}
+	.kinvalley01{
+		background-image:url(../content/projects/kv/KinValley_01.jpg);
+		height:467px;
+	}
+	.marthastewart01{
+		background-image:url(../content/projects/mslo/MarthaStewart_01.jpg);
+		height:275px;
+	}
+	.marthastewart02{
+		background-image:url(../content/projects/mslo/MarthaStewart_02.jpg);
+		height:275px;
+	}
+	.mediasatellite01{
+		background-image:url(../content/projects/ultrastar/MEDIA_SATELLITE_03.jpg);
+		height:243px;
+	}
+	.stones01{
+		background-image:url(../content/projects/other/RollingStones_02.png);
+		height:366px;
+	}
+	.countingcrows01{
+		background-image:url(../content/projects/other/CountingCrows_01.jpg);
+		height:366px;
+	}
+	.roberto01{
+		background-image:url(../content/projects/other/RobertoStudios_01.jpg);
+		height:366px;
+	}
+	.discover01{
+		background-image:url(../content/projects/other/Discover_CardMatch_01.jpg);
+		height:366px;
+	}	
+	.mechanicalbull01{
+		background-image:url(../content/projects/mb/MB_Title.jpg);
+		height:366px;
 	}
 }

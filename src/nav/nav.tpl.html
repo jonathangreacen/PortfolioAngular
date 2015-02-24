@@ -1,10 +1,12 @@
-<nav>
-	<div class="homeBtn">
-		<a href="/" alt="home"></a>
-	</div>
-	<ul class="sectionButtons">
-		<li class="navItem" data-ng-class="{current:section.url === currentSectionUrl}" data-ng-repeat="section in navSections">
-			<a data-nav-button data-ng-click="onClick($event, section)"  href=''>{{section.label}}</a>
-		</li>
-	</ul>
-</nav>
+<script type="text/ng-template" id="nav.tpl.html">
+	<nav>
+		<div class="homeBtn">
+			<a href="/#work" alt="home"></a>
+		</div>
+		<ul class="sectionButtons">
+			<li class="navItem" data-ng-class="{current:section.url === currentSectionUrl}" data-ng-repeat="section in navSections">
+				<a data-nav-button data-ng-click="onClick($event, section)"  href=''>{{section.label}}</a>
+			</li>
+		</ul>
+	</nav>
+</script>

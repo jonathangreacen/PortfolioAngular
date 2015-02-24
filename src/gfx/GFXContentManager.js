@@ -2,17 +2,13 @@
 	'use strict';
 
 	var module = angular.module('workshop.portfolio');	
-		module.service('GFXContentManager', ['Brownian', 'ColorGrade', 'LogarithmicUniverse', 'PerlinBlocks', GFXContentManager]);
+		module.service('GFXContentManager', ['$injector', GFXContentManager]);
 
-	function GFXContentManager(Brownian, ColorGrade, LogarithmicUniverse, PerlinBlocks){/*, Brownian, ColorCycle*/
-		this.visualizations = { 'logarithmic-universe':LogarithmicUniverse,
-								'perlin-blocks':PerlinBlocks,
-								'brownian':Brownian,
-								'color-grade':ColorGrade
-							}; 
+	function GFXContentManager($injector){
+		
 		this.currentVisualization;
 		this.requestVisualization = function(_name){
-			var vis = this.visualizations[_name];
+			var vis = $injector.get(_name);//this.visualizations[_name];
 			if(typeof vis !== 'undefined'){
 				this.currentVisualization = vis;
 			}

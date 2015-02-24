@@ -1,5 +1,6 @@
 .js nav{
 	position:fixed;
+	display:block;
 	vertical-align:bottom;
 	height:$navMobileHeight;
 	left:0;
@@ -14,14 +15,19 @@
 		.homeBtn{
 			opacity:1;
 			height:em(32);
-			@include vendorPrefixer(transition, opacity .35s linear);
+			perspective: 1000;
+
+			transform: rotateX(0deg);
 		}
 	}
 	.homeBtn{
 		opacity:0;
 		height:0;
-		@include vendorPrefixer (transition, height .25s linear);//
-		//@include vendorPrefixer(transition, opacity .35s linear);
+		@include vendorPrefixer(transition, (opacity .35s linear, height .25s linear, transform .35s ease-out));
+
+		//transition: 0.6s;
+		transform-style: preserve-3d;
+		transform: rotateX(-90deg);
 	}
 	@include tabletish{
 		height:$collapsedNavHeight;

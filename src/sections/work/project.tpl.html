@@ -1,10 +1,12 @@
-<article data-ng-class="{selected : state.currentFocusedProject.data === project}">
-	<div class="imagePreview" data-image-preview data-images="{{project.images}}"></div>
-	<h1><span data-ng-style="{color:project.color}">{{project.title}}</span> {{project.summary}}</h1>
-	<div class="description" data-ng-bind-html="project.description"></div>
-	<ul class="info">
-		<li class="couplet" data-ng-repeat="info in project.info">
-			<strong>{{info.type}}</strong> {{info.value}}
-		</li>
-	</ul>
-</article>
+<script type="text/ng-template" id="project.tpl.html">
+	<article data-ng-class="{selected : state.currentFocusedProject.data === project}">
+		<div class="imagePreview" data-image-preview data-images="{{project.images}}"></div>
+		<h1><span data-ng-style="{color:project.color}">{{project.title}}</span> {{project.summary}}</h1>
+		<div class="description" data-ng-bind-html="project.description"></div>
+		<ul class="info">
+			<li class="couplet" data-ng-repeat="info in project.info">
+				<strong>{{info.type}}</strong> {{info.value}}
+			</li>
+		</ul>
+	</article>
+</script>

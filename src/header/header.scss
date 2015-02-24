@@ -1,12 +1,22 @@
-.js .site header{
+
+.site header{
 	padding-top:$expandedNavHeight + em(65);
 	padding-bottom:1em;
 	text-align:center;
+
+	img{
+		max-width:100%;
+	}
+}
+.js .site header{
+	padding-bottom:0;
+	padding-top:8.5em;
 
 	img.letterForm{
 		max-width:100%;
 	}
 	p.title{
+		padding-bottom:0;
 		color:#7e7e7e;
 		font-size:em(20);
 		a{
@@ -26,6 +36,7 @@
 	}
 
 	@include tabletish{
-		padding-top:$collapsedNavHeight + em(65);
+		padding-top:$expandedNavHeight + em(65);
+		padding-bottom:1em;
 	}
 }

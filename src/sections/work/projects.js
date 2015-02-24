@@ -67,7 +67,7 @@
 				scope:true,
 				transclude:true,
 				replace:true,
-				templateUrl:'../src/sections/work/project.tpl.html',
+				templateUrl:'project.tpl.html',
 				require:'^projects',
 				controller:function($scope, $element){
 					$scope.imagePreview;

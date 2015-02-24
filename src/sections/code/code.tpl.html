@@ -1,6 +1,8 @@
-<section data-code class="code" role="">
-	<article data-ng-repeat="content in codeData.items">
-		<h1>{{content.title}}</h1>
-		<div class="description" data-ng-bind-html="content.description"></div>		
-	</article>
-</section>
+<script type="text/ng-template" id="code.tpl.html">
+	<section data-code class="code" role="">
+		<article data-ng-repeat="content in codeData.items">
+			<h1>{{content.title}}</h1>
+			<div class="description" data-ng-bind-html="content.description"></div>		
+		</article>
+	</section>
+</script>

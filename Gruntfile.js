@@ -13,7 +13,11 @@ module.exports = function(grunt) {
       scss:{
         src:['src/sass/*.scss', 'src/**/*.scss'],
         dest:'dist/build.scss'
-      }     
+      },
+      templates:{
+        src:['src/**/*.tpl.html'],
+        dest:'dist/templates.tpl.html'
+      }
     },
     sass: {
       dist: {
@@ -33,6 +37,18 @@ module.exports = function(grunt) {
         compress:false
       }
     },
+
+    includes: { 
+      build: {
+        cwd: 'src',
+        src: [ 'index.html'],
+        dest: '.',
+        options: {
+          flatten: true,
+          includePath:'dist'
+        }
+      }
+    },
     watch: {
       scripts: {
         files: ['src/**/*.js'],
@@ -44,6 +60,10 @@ module.exports = function(grunt) {
       css: {
         files: 'src/**/*.scss',
         tasks: ['concat', 'sass']
+      },
+      html:{
+        files: 'src/**/*.html',
+        tasks: ['includes']
       }
     }
   });
@@ -51,8 +71,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-includes');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('build', ['concat', 'sass', 'uglify', 'watch']);
+  grunt.registerTask('build', ['concat', 'sass', 'uglify', 'includes', 'watch']);
 
 };

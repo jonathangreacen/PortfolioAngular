@@ -157,15 +157,25 @@ $navMobileHeight:auto;
 		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#14000000',GradientType=1 );
 	}
 }
-.js .site header{
+
+.site header{
 	padding-top:$expandedNavHeight + em(65);
 	padding-bottom:1em;
 	text-align:center;
+
+	img{
+		max-width:100%;
+	}
+}
+.js .site header{
+	padding-bottom:0;
+	padding-top:8.5em;
 
 	img.letterForm{
 		max-width:100%;
 	}
 	p.title{
+		padding-bottom:0;
 		color:#7e7e7e;
 		font-size:em(20);
 		a{
@@ -185,11 +195,13 @@ $navMobileHeight:auto;
 	}
 
 	@include tabletish{
-		padding-top:$collapsedNavHeight + em(65);
+		padding-top:$expandedNavHeight + em(65);
+		padding-bottom:1em;
 	}
 }
 .js nav{
 	position:fixed;
+	display:block;
 	vertical-align:bottom;
 	height:$navMobileHeight;
 	left:0;
@@ -204,14 +216,19 @@ $navMobileHeight:auto;
 		.homeBtn{
 			opacity:1;
 			height:em(32);
-			@include vendorPrefixer(transition, opacity .35s linear);
+			perspective: 1000;
+
+			transform: rotateX(0deg);
 		}
 	}
 	.homeBtn{
 		opacity:0;
 		height:0;
-		@include vendorPrefixer (transition, height .25s linear);//
-		//@include vendorPrefixer(transition, opacity .35s linear);
+		@include vendorPrefixer(transition, (opacity .35s linear, height .25s linear, transform .35s ease-out));
+
+		//transition: 0.6s;
+		transform-style: preserve-3d;
+		transform: rotateX(-90deg);
 	}
 	@include tabletish{
 		height:$collapsedNavHeight;
@@ -293,20 +310,95 @@ $navMobileHeight:auto;
 	}
 
 }
-.gfx, .content{
+.gfx, .content, nav{
 	display:none;
 }
-.noJS{
-	margin:0 $gfxContentMargin;
 
-	div{
-		background-position:0 0;
-		background-color:#FFFFFF;
-		background-repeat:no-repeat;
+.noJS{	
+	margin:0 $gfxContentMargin;
+	padding-bottom:$footerHeight+20;
+	header img{
 		max-width:100%;
 	}
+	div{
+
+		background-position:center;
+		background-color:#FFFFFF;
+		background-repeat:no-repeat;
+		background-size:contain;
+		max-width:100%;
+		margin:0;
+		@include tabletish{
+			margin:20px;
+		}
+
+		p{
+			font-size:18px;
+		}
+	}
 	.vanguard01{
+		background-image:url(../content/projects/vanguard/psr/vanguard_psr_01.jpg);
+		height:462px;
+	}
+	.vanguard02{
 		background-image:url(../content/projects/vanguard/psr/vanguard_psr_03.jpg);
+		height:462px;
+	}
+	.newstrends01{
+		background-image:url(../content/projects/dg/NewsTrends01.jpg);
+		height:465px;
+	}
+	.dg01{
+		background-image:url(../content/projects/dg/DachisGroup_IndexAreaGraph.png);
+		height:218px;
+	}
+	.dg02{
+		background-image:url(../content/projects/dg/DachisGroup_SBG.png);
+		height:218px;
+	}
+	.dltxii02{
+		background-image:url(../content/projects/dltxii/DLTXII_GALLERY_MOBILE_02.jpg);
+		height:552px;
+	}
+	.signalpatterns01{
+		background-image:url(../content/projects/sp/SP_PERSONALITY_02.jpg);
+		height:390px;
+	}
+	.kinvalley01{
+		background-image:url(../content/projects/kv/KinValley_01.jpg);
+		height:467px;
+	}
+	.marthastewart01{
+		background-image:url(../content/projects/mslo/MarthaStewart_01.jpg);
+		height:275px;
+	}
+	.marthastewart02{
+		background-image:url(../content/projects/mslo/MarthaStewart_02.jpg);
+		height:275px;
+	}
+	.mediasatellite01{
+		background-image:url(../content/projects/ultrastar/MEDIA_SATELLITE_03.jpg);
+		height:243px;
+	}
+	.stones01{
+		background-image:url(../content/projects/other/RollingStones_02.png);
+		height:366px;
+	}
+	.countingcrows01{
+		background-image:url(../content/projects/other/CountingCrows_01.jpg);
+		height:366px;
+	}
+	.roberto01{
+		background-image:url(../content/projects/other/RobertoStudios_01.jpg);
+		height:366px;
+	}
+	.discover01{
+		background-image:url(../content/projects/other/Discover_CardMatch_01.jpg);
+		height:366px;
+	}	
+	.mechanicalbull01{
+		background-image:url(../content/projects/mb/MB_Title.jpg);
+		height:366px;
 	}
 }
 .js .site .content .about{
@@ -396,7 +488,7 @@ $navMobileHeight:auto;
 			font-size:em(28);
 			font-style:italic;
 			font-weight:normal;
-			line-height:1.333em;
+			line-height:1.15em;
 			vertical-align:baseline;
 			margin:em(10) 0;
 			color:$articleSummaryTxtCol;
@@ -516,6 +608,12 @@ html, body{
 	font-family:"Sorts Mill Goudy",Georgia,serif;
 	font-size:1em;
 }
+.site{
+	position:relative;
+	min-height:100%;
+	padding:0;
+	margin:0;	
+}
 
 .js {
 	.gfx{
@@ -525,13 +623,8 @@ html, body{
 		}
 	}
 	.site{
-		position:relative;
-		min-height:100%;
-		padding:0;
-		margin:0;
 		margin-left:$gfxContentMargin/2;
 		padding-right:$gfxContentMargin/2;
-
 		@include tabletish{
 			margin-left:$gfxWidth + $gfxContentMargin;
 			padding-right:$gfxContentMargin;
@@ -545,8 +638,8 @@ html, body{
 		}
 	}
 }
-.clearFix:after {
+/* .clearFix:after {
 	content: "";
 	display: table;
 	clear: both;
-}
+} */

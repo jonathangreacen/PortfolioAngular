@@ -1,6 +1,7 @@
 //Base application
 (function(angular){
-	'use strict';	
+	'use strict';
+	setTimeout(function(){document.body.className += ' js';}, 50);
 	var module = angular.module('workshop.portfolio', ['ngRoute', 'ngSanitize']);
 }(angular));;(function(angular){
 	'use strict';
@@ -49,17 +50,13 @@
 	'use strict';
 
 	var module = angular.module('workshop.portfolio');	
-		module.service('GFXContentManager', ['Brownian', 'ColorGrade', 'LogarithmicUniverse', 'PerlinBlocks', GFXContentManager]);
+		module.service('GFXContentManager', ['$injector', GFXContentManager]);
 
-	function GFXContentManager(Brownian, ColorGrade, LogarithmicUniverse, PerlinBlocks){/*, Brownian, ColorCycle*/
-		this.visualizations = { 'logarithmic-universe':LogarithmicUniverse,
-								'perlin-blocks':PerlinBlocks,
-								'brownian':Brownian,
-								'color-grade':ColorGrade
-							}; 
+	function GFXContentManager($injector){
+		
 		this.currentVisualization;
 		this.requestVisualization = function(_name){
-			var vis = this.visualizations[_name];
+			var vis = $injector.get(_name);//this.visualizations[_name];
 			if(typeof vis !== 'undefined'){
 				this.currentVisualization = vis;
 			}
@@ -530,11 +527,14 @@
 					runVis = mediaQueryList.matches;
 				}				
 				function init(){
+					var matchingLargeFormat;
 					resize();
 					
 					//For performance when in small/mobile format
-					var matchingLargeFormat = window.matchMedia("(min-width : 520px)");
+					if(typeof $window['matchMedia'] !== 'undefined'){
+						matchingLargeFormat = $window.matchMedia("(min-width : 520px)");
 						matchingLargeFormat.addListener(toggleVisRunningByMQ);
+					}
 				}
 				angular.element($window).on('resize', resize.bind(this));
 				angular.element(canvas).on('click touchstart', interact.bind(this));				
@@ -1056,24 +1056,26 @@
 		return {
 			restrict:'A',
 			scope:true,
-			templateUrl:'../src/nav/nav.tpl.html',
+			templateUrl:'nav.tpl.html',
 			replace:true,
 			controller:function($scope){
 				$scope.navigateTo = function(sectionData){
 					var url = sectionData.url;
-					$scope.currentSectionUrl = url;
 					$location.path( url );
 					if($window.ga){
 						$window.ga('send', 'pageview', { page: $location.url() });
 					}
 				}
+				$scope.$on('$routeChangeSuccess', function () {
+					$scope.currentSectionUrl = $location.path();
+		        });
 			},
 			link:function(scope, $element, attributes){
 				var expanded = false,
 					retractYPosition = 120,
 					url = $location.url();
 				scope.navSections = Constants.SECTIONS;
-				scope.currentSectionUrl =  url === '/' ? '/work' : url;				
+				scope.currentSectionUrl =  url === '/' ? '/work' : url;
 
 				onScroll();
 				angular.element($window).bind('scroll', onScroll);
@@ -1109,19 +1111,16 @@
 
 	function Routes($locationProvider, $routeProvider){
 		$routeProvider.when('/work', {
-			templateUrl:'src/sections/work/projects.tpl.html'
+			templateUrl:'projects.tpl.html'
 		})
 		.when('/about', {
-			templateUrl:'src/sections/about/about.tpl.html'
+			templateUrl:'about.tpl.html'
 		})
 		.when('/code', {
-			templateUrl:'src/sections/code/code.tpl.html'
+			templateUrl:'code.tpl.html'
 		})		
 		.when('/contact', {
-			templateUrl:'src/sections/contact/contact.tpl.html'
-		})		
-		.when('/', {
-			templateUrl:'src/sections/work/projects.tpl.html'
+			templateUrl:'contact.tpl.html'
 		})
 		.otherwise({redirectTo:'/work'}); 
 	};
@@ -1363,7 +1362,7 @@
 				scope:true,
 				transclude:true,
 				replace:true,
-				templateUrl:'../src/sections/work/project.tpl.html',
+				templateUrl:'project.tpl.html',
 				require:'^projects',
 				controller:function($scope, $element){
 					$scope.imagePreview;

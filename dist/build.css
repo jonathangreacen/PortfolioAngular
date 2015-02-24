@@ -50,13 +50,20 @@
     background: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.08) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#14000000',GradientType=1 ); }
 
-.js .site header {
+.site header {
   padding-top: 10.3125em;
   padding-bottom: 1em;
   text-align: center; }
+  .site header img {
+    max-width: 100%; }
+
+.js .site header {
+  padding-bottom: 0;
+  padding-top: 8.5em; }
   .js .site header img.letterForm {
     max-width: 100%; }
   .js .site header p.title {
+    padding-bottom: 0;
     color: #7e7e7e;
     font-size: 1.25em; }
     .js .site header p.title a {
@@ -76,10 +83,12 @@
       word-wrap: nowrap; }
   @media (min-width: 715px) {
     .js .site header {
-      padding-top: 8.125em; } }
+      padding-top: 10.3125em;
+      padding-bottom: 1em; } }
 
 .js nav {
   position: fixed;
+  display: block;
   vertical-align: bottom;
   height: auto;
   left: 0;
@@ -96,19 +105,18 @@
   .js nav.collapsed .homeBtn {
     opacity: 1;
     height: 2em;
-    -webkit-transition: opacity 0.35s linear;
-    -moz-transition: opacity 0.35s linear;
-    -ms-transition: opacity 0.35s linear;
-    -o-transition: opacity 0.35s linear;
-    transition: opacity 0.35s linear; }
+    perspective: 1000;
+    transform: rotateX(0deg); }
   .js nav .homeBtn {
     opacity: 0;
     height: 0;
-    -webkit-transition: height 0.25s linear;
-    -moz-transition: height 0.25s linear;
-    -ms-transition: height 0.25s linear;
-    -o-transition: height 0.25s linear;
-    transition: height 0.25s linear; }
+    -webkit-transition: opacity 0.35s linear, height 0.25s linear, transform 0.35s ease-out;
+    -moz-transition: opacity 0.35s linear, height 0.25s linear, transform 0.35s ease-out;
+    -ms-transition: opacity 0.35s linear, height 0.25s linear, transform 0.35s ease-out;
+    -o-transition: opacity 0.35s linear, height 0.25s linear, transform 0.35s ease-out;
+    transition: opacity 0.35s linear, height 0.25s linear, transform 0.35s ease-out;
+    transform-style: preserve-3d;
+    transform: rotateX(-90deg); }
   @media (min-width: 715px) {
     .js nav {
       height: 4.0625em;
@@ -174,18 +182,74 @@
       color: #FFFFFF;
       background-color: #333333; }
 
-.gfx, .content {
+.gfx, .content, nav {
   display: none; }
 
 .noJS {
-  margin: 0 35px; }
+  margin: 0 35px;
+  padding-bottom: 120px; }
+  .noJS header img {
+    max-width: 100%; }
   .noJS div {
-    background-position: 0 0;
+    background-position: center;
     background-color: #FFFFFF;
     background-repeat: no-repeat;
-    max-width: 100%; }
+    background-size: contain;
+    max-width: 100%;
+    margin: 0; }
+    @media (min-width: 715px) {
+      .noJS div {
+        margin: 20px; } }
+    .noJS div p {
+      font-size: 18px; }
   .noJS .vanguard01 {
-    background-image: url(../content/projects/vanguard/psr/vanguard_psr_03.jpg); }
+    background-image: url(../content/projects/vanguard/psr/vanguard_psr_01.jpg);
+    height: 462px; }
+  .noJS .vanguard02 {
+    background-image: url(../content/projects/vanguard/psr/vanguard_psr_03.jpg);
+    height: 462px; }
+  .noJS .newstrends01 {
+    background-image: url(../content/projects/dg/NewsTrends01.jpg);
+    height: 465px; }
+  .noJS .dg01 {
+    background-image: url(../content/projects/dg/DachisGroup_IndexAreaGraph.png);
+    height: 218px; }
+  .noJS .dg02 {
+    background-image: url(../content/projects/dg/DachisGroup_SBG.png);
+    height: 218px; }
+  .noJS .dltxii02 {
+    background-image: url(../content/projects/dltxii/DLTXII_GALLERY_MOBILE_02.jpg);
+    height: 552px; }
+  .noJS .signalpatterns01 {
+    background-image: url(../content/projects/sp/SP_PERSONALITY_02.jpg);
+    height: 390px; }
+  .noJS .kinvalley01 {
+    background-image: url(../content/projects/kv/KinValley_01.jpg);
+    height: 467px; }
+  .noJS .marthastewart01 {
+    background-image: url(../content/projects/mslo/MarthaStewart_01.jpg);
+    height: 275px; }
+  .noJS .marthastewart02 {
+    background-image: url(../content/projects/mslo/MarthaStewart_02.jpg);
+    height: 275px; }
+  .noJS .mediasatellite01 {
+    background-image: url(../content/projects/ultrastar/MEDIA_SATELLITE_03.jpg);
+    height: 243px; }
+  .noJS .stones01 {
+    background-image: url(../content/projects/other/RollingStones_02.png);
+    height: 366px; }
+  .noJS .countingcrows01 {
+    background-image: url(../content/projects/other/CountingCrows_01.jpg);
+    height: 366px; }
+  .noJS .roberto01 {
+    background-image: url(../content/projects/other/RobertoStudios_01.jpg);
+    height: 366px; }
+  .noJS .discover01 {
+    background-image: url(../content/projects/other/Discover_CardMatch_01.jpg);
+    height: 366px; }
+  .noJS .mechanicalbull01 {
+    background-image: url(../content/projects/mb/MB_Title.jpg);
+    height: 366px; }
 
 .js .site .content .about article h1 {
   color: #09f; }
@@ -263,7 +327,7 @@
       font-size: 1.75em;
       font-style: italic;
       font-weight: normal;
-      line-height: 1.333em;
+      line-height: 1.15em;
       vertical-align: baseline;
       margin: 0.625em 0;
       color: #333333; }
@@ -350,16 +414,18 @@ html, body {
   font-family: "Sorts Mill Goudy",Georgia,serif;
   font-size: 1em; }
 
+.site {
+  position: relative;
+  min-height: 100%;
+  padding: 0;
+  margin: 0; }
+
 .js .gfx {
   display: none; }
   @media (min-width: 715px) {
     .js .gfx {
       display: block; } }
 .js .site {
-  position: relative;
-  min-height: 100%;
-  padding: 0;
-  margin: 0;
   margin-left: 17.5px;
   padding-right: 17.5px; }
   @media (min-width: 715px) {
@@ -372,9 +438,10 @@ html, body {
   .js .site .noJS {
     display: none; }
 
-.clearFix:after {
-  content: "";
-  display: table;
-  clear: both; }
+/* .clearFix:after {
+	content: "";
+	display: table;
+	clear: both;
+} */
 
 /*# sourceMappingURL=build.css.map */
