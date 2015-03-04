@@ -5,31 +5,31 @@ module.exports = function(grunt) {
     concat: {
       script:{
         src:['src/app/app.js', 'src/**/*.js'],
-        dest:'dist/build.js',
+        dest:'dist/js/build.js',
         options:{
           separator:';'
         }
       },
       scss:{
         src:['src/sass/*.scss', 'src/**/*.scss'],
-        dest:'dist/build.scss'
+        dest:'dist/css/build.scss'
       },
       templates:{
         src:['src/**/*.tpl.html'],
-        dest:'dist/templates.tpl.html'
+        dest:'dist/tpl/templates.tpl.html'
       }
     },
     sass: {
       dist: {
         files: {
-          'dist/build.css' : 'dist/build.scss' 
+          'dist/css/build.css' : 'dist/css/build.scss' 
         }
       }
     },
     uglify: {
       dist: {
         files: {
-          'dist/build.min.js': ['dist/build.js']
+          'dist/js/build.min.js': ['dist/js/build.js']
         }
       },
       options:{
@@ -42,10 +42,10 @@ module.exports = function(grunt) {
       build: {
         cwd: 'src',
         src: [ 'index.html'],
-        dest: '.',
+        dest: 'dist',
         options: {
           flatten: true,
-          includePath:'dist'
+          includePath:'dist/tpl'
         }
       }
     },
