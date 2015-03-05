@@ -2,9 +2,10 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    clean: ["dist"],
     concat: {
       script:{
-        src:['src/app/app.js', 'src/**/*.js'],
+        src:['src/app/app.js', 'src/gfx/utils/*.js','src/**/*.js'],
         dest:'dist/js/build.js',
         options:{
           separator:';'
@@ -49,6 +50,13 @@ module.exports = function(grunt) {
         }
       }
     },
+    copy: {
+      main: {
+        expand:true,
+        src: 'content/**/*',
+        dest: 'dist/',
+      }
+    },
     watch: {
       scripts: {
         files: ['src/**/*.js'],
@@ -68,12 +76,14 @@ module.exports = function(grunt) {
     }
   });
 
+  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-includes');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('build', ['concat', 'sass', 'uglify', 'includes', 'watch']);
+  grunt.registerTask('build', ['clean', 'concat', 'sass', 'uglify', 'includes', 'copy', 'watch']);
 
 };

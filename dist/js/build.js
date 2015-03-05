@@ -3,66 +3,6 @@
 	'use strict';
 	setTimeout(function(){document.body.className += ' js';}, 50);
 	var module = angular.module('workshop.portfolio', ['ngRoute', 'ngSanitize']);
-}(angular));;(function(angular){
-	'use strict';
-	
-	var module = angular.module('workshop.portfolio');	
-		module.service('AppContent', ['$http', '$q', 'Constants', AppContent]);
-
-	function AppContent($http, $q, Constants){
-		var deferredAppContent = {};
-
-		function loadContentFeed(view){
-			var contentPath = Constants.API_PATH + '/' + view + '/feed.' + Constants.API_TYPE;
-
-			if(!deferredAppContent[view]){
-				deferredAppContent[view] = $q.defer();
-			}
-
-			$http.get(contentPath).success(angular.bind(this, onContentLoaded, view));
-		};
-
-		function onContentLoaded(view, data){
-			deferredAppContent[view].resolve(data);
-		};
-
-		this.getContentForView = function(view){
-			if(!deferredAppContent[view]){
-				loadContentFeed(view);
-			}
-			return deferredAppContent[view].promise;
-		};
-
-	};
-
-}(angular));;(function(angular){
-	var module = angular.module('workshop.portfolio');	
-		module.service('Constants', Constants);
-
-	function Constants(){
-		this.API_PATH 		= 'content/';
-		this.DEFAULT_VIEW 	= 'projects';
-		this.API_TYPE 		= 'json';
-		this.SECTIONS 		= [{label:'WORK',value:'projects',url:'/work'}, {label:'ABOUT',value:'about',url:'/about'}, {label:'CODE',value:'code',url:'/code'}, {label:'CONTACT',value:'contact',url:'/contact'}];
-	};
-
-}(angular));;(function(angular){
-	'use strict';
-
-	var module = angular.module('workshop.portfolio');	
-		module.service('GFXContentManager', ['$injector', GFXContentManager]);
-
-	function GFXContentManager($injector){
-		
-		this.currentVisualization;
-		this.requestVisualization = function(_name){
-			var vis = $injector.get(_name);//this.visualizations[_name];
-			if(typeof vis !== 'undefined'){
-				this.currentVisualization = vis;
-			}
-		}
-	};
-						
 }(angular));;// Perlin  1.0
 // Ported from java (http://mrl.nyu.edu/~perlin/noise/) by Ron Valstar (http://www.sjeiti.com/)
 // and some help from http://freespace.virgin.net/hugo.elias/models/m_perlin.htm
@@ -219,6 +159,100 @@
 				return "[object Perlin "+iOctaves+" "+fPersistence+"]";
 			}
 		};
+	};
+
+}(angular));;(function(angular){
+	'use strict';
+
+	var module = angular.module('workshop.portfolio');	
+		module.service('Drawing', [Drawing]);
+
+	function Drawing(){
+		this.combineRGB = function(r,g,b){
+			return (r<<16) | (g<<8) | b;
+		}
+		this.hexToRGB = function(hex){
+			var r = hex >> 16,
+				temp = hex ^ r << 16,
+				g = temp >> 8,
+				b = temp ^ g << 8;
+			return [r,g,b];
+		};
+		this.colorGrade = function(col1, col2, fragments, arr){
+			var col1RGB = this.hexToRGB(col1),
+				col2RGB = this.hexToRGB(col2),
+				c1 		= {r:col1RGB[0], g:col1RGB[1], b:col1RGB[2], rgb:col1RGB},
+				c2 		= {r:col2RGB[0], g:col2RGB[1], b:col2RGB[2], rgb:col2RGB},
+				mix 	= {r:((c2.r - c1.r)/fragments), g:((c2.g - c1.g)/fragments), b:((c2.b - c1.b)/fragments)},
+				grades 	= arr || [],
+				i = 0, 
+				hex;
+			for(; i<fragments; i++){
+				grades.push( this.combineRGB(c1.r + mix.r*i, c1.g + mix.g*i, c1.b + mix.b*i) );
+			}
+			return grades;
+		};
+		return this;
+	}
+
+}(angular));;(function(angular){
+	'use strict';
+
+	var module = angular.module('workshop.portfolio');	
+		module.factory('requestAnimationFrame', [RAF]);
+
+	function RAF(){		
+		return window.requestAnimationFrame    ||
+		    window.webkitRequestAnimationFrame ||
+		    window.mozRequestAnimationFrame    ||
+		    window.oRequestAnimationFrame      ||
+		    window.msRequestAnimationFrame     ||
+		    function(callback, element){
+		      window.setTimeout(callback, 1000 / 60);
+		    };
+	}
+
+}(angular));;(function(angular){
+	'use strict';
+	
+	var module = angular.module('workshop.portfolio');	
+		module.service('AppContent', ['$http', '$q', 'Constants', AppContent]);
+
+	function AppContent($http, $q, Constants){
+		var deferredAppContent = {};
+
+		function loadContentFeed(view){
+			var contentPath = Constants.API_PATH + '/' + view + '/feed.' + Constants.API_TYPE;
+
+			if(!deferredAppContent[view]){
+				deferredAppContent[view] = $q.defer();
+			}
+
+			$http.get(contentPath).success(angular.bind(this, onContentLoaded, view));
+		};
+
+		function onContentLoaded(view, data){
+			deferredAppContent[view].resolve(data);
+		};
+
+		this.getContentForView = function(view){
+			if(!deferredAppContent[view]){
+				loadContentFeed(view);
+			}
+			return deferredAppContent[view].promise;
+		};
+
+	};
+
+}(angular));;(function(angular){
+	var module = angular.module('workshop.portfolio');	
+		module.service('Constants', Constants);
+
+	function Constants(){
+		this.API_PATH 		= 'content/';
+		this.DEFAULT_VIEW 	= 'projects';
+		this.API_TYPE 		= 'json';
+		this.SECTIONS 		= [{label:'WORK',value:'projects',url:'/work'}, {label:'ABOUT',value:'about',url:'/about'}, {label:'CODE',value:'code',url:'/code'}, {label:'CONTACT',value:'contact',url:'/contact'}];
 	};
 
 }(angular));;(function(angular){
@@ -451,36 +485,19 @@
 	'use strict';
 
 	var module = angular.module('workshop.portfolio');	
-		module.service('Drawing', [Drawing]);
+		module.service('GFXContentManager', ['$injector', GFXContentManager]);
 
-	function Drawing(){
-		this.combineRGB = function(r,g,b){
-			return (r<<16) | (g<<8) | b;
-		}
-		this.hexToRGB = function(hex){
-			var r = hex >> 16,
-				temp = hex ^ r << 16,
-				g = temp >> 8,
-				b = temp ^ g << 8;
-			return [r,g,b];
-		};
-		this.colorGrade = function(col1, col2, fragments, arr){
-			var col1RGB = this.hexToRGB(col1),
-				col2RGB = this.hexToRGB(col2),
-				c1 		= {r:col1RGB[0], g:col1RGB[1], b:col1RGB[2], rgb:col1RGB},
-				c2 		= {r:col2RGB[0], g:col2RGB[1], b:col2RGB[2], rgb:col2RGB},
-				mix 	= {r:((c2.r - c1.r)/fragments), g:((c2.g - c1.g)/fragments), b:((c2.b - c1.b)/fragments)},
-				grades 	= arr || [],
-				i = 0, 
-				hex;
-			for(; i<fragments; i++){
-				grades.push( this.combineRGB(c1.r + mix.r*i, c1.g + mix.g*i, c1.b + mix.b*i) );
+	function GFXContentManager($injector){
+		
+		this.currentVisualization;
+		this.requestVisualization = function(_name){
+			var vis = $injector.get(_name);//this.visualizations[_name];
+			if(typeof vis !== 'undefined'){
+				this.currentVisualization = vis;
 			}
-			return grades;
-		};
-		return this;
-	}
-
+		}
+	};
+						
 }(angular));;(function(angular){
 	'use strict';
 
@@ -1027,23 +1044,6 @@
 			}
 		};
 	};
-
-}(angular));;(function(angular){
-	'use strict';
-
-	var module = angular.module('workshop.portfolio');	
-		module.factory('requestAnimationFrame', [RAF]);
-
-	function RAF(){		
-		return window.requestAnimationFrame    ||
-		    window.webkitRequestAnimationFrame ||
-		    window.mozRequestAnimationFrame    ||
-		    window.oRequestAnimationFrame      ||
-		    window.msRequestAnimationFrame     ||
-		    function(callback, element){
-		      window.setTimeout(callback, 1000 / 60);
-		    };
-	}
 
 }(angular));;(function(angular){
 	'use strict';
